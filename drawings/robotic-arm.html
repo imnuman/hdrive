@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotic Arm Component Selection</title>
+    <title>7-DOF Robotic Arm - Component Selection & 3D Model</title>
     <style>
         * {
             margin: 0;
@@ -386,38 +386,299 @@
             body { background: white; color: black; }
             nav { display: none; }
             .section { break-inside: avoid; }
+            .viewer-section { display: none; }
+        }
+
+        /* ============================================
+           3D VIEWER SECTION STYLES
+           ============================================ */
+        .viewer-section {
+            background: #16213e;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .viewer-container {
+            display: flex;
+            min-height: 600px;
+        }
+        .viewer-sidebar {
+            width: 280px;
+            background: #16213e;
+            padding: 20px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .sidebar-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #0f3460;
+        }
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+        .sidebar-section h4 {
+            color: #e94560;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+        .pose-btn, .part-btn, .view-btn {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #0f3460;
+            border: none;
+            border-radius: 6px;
+            color: #eee;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            min-height: 44px;
+            font-size: 0.9rem;
+        }
+        .pose-btn:hover, .part-btn:hover, .view-btn:hover {
+            background: #1a4a7a;
+        }
+        .pose-btn.active, .part-btn.active {
+            background: #e94560;
+        }
+        .pose-btn h3 {
+            margin-bottom: 3px;
+            font-size: 0.95rem;
+        }
+        .pose-btn p {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin: 0;
+        }
+        .pose-btn.active p {
+            color: #fcc;
+        }
+        .viewer-main {
+            flex: 1;
+            position: relative;
+            background: #0d0d1a;
+            min-height: 600px;
+        }
+        #arm-viewer {
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+        }
+        .viewer-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background: rgba(22, 33, 62, 0.9);
+            padding: 10px 20px;
+            border-radius: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .control-btn {
+            padding: 10px 16px;
+            background: #0f3460;
+            border: none;
+            border-radius: 20px;
+            color: #eee;
+            cursor: pointer;
+            font-size: 0.85rem;
+            min-height: 44px;
+            min-width: 44px;
+            transition: background 0.2s;
+        }
+        .control-btn:hover {
+            background: #e94560;
+        }
+        .arm-info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(22, 33, 62, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 280px;
+            min-width: 220px;
+        }
+        .arm-info-panel h2 {
+            color: #e94560;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .arm-info-panel table {
+            width: 100%;
+            font-size: 0.85rem;
+        }
+        .arm-info-panel td {
+            padding: 6px 0;
+        }
+        .arm-info-panel td:first-child {
+            color: #888;
+        }
+        .arm-info-panel td:last-child {
+            color: #eee;
+            text-align: right;
+        }
+        .viewer-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #0f3460;
+            border-top-color: #e94560;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .joint-config {
+            background: #0f3460;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        .joint-config h5 {
+            color: #ffd43b;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+        .joint-config table {
+            width: 100%;
+            font-size: 0.75rem;
+        }
+        .joint-config td {
+            padding: 3px 0;
+        }
+        .joint-config td:first-child {
+            color: #888;
+        }
+        .joint-config td:last-child {
+            color: #51cf66;
+        }
+
+        /* Downloads section styling */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .download-card {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .download-card h4 {
+            color: #e94560;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        .download-card p {
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        .download-card a {
+            display: inline-block;
+            padding: 8px 12px;
+            background: #1a1a2e;
+            color: #4a9eff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .download-card a:hover {
+            background: #e94560;
+            color: #fff;
+        }
+
+        /* Mobile responsive for viewer */
+        @media (max-width: 768px) {
+            .viewer-container {
+                flex-direction: column;
+            }
+            .viewer-sidebar {
+                width: 100%;
+                padding: 15px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .sidebar-section {
+                flex: 1 1 calc(50% - 5px);
+                min-width: 140px;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+            }
+            .viewer-main {
+                height: 50vh;
+                min-height: 400px;
+            }
+            #arm-viewer {
+                min-height: 400px;
+            }
+            .arm-info-panel {
+                position: relative;
+                max-width: 100%;
+                margin: 10px;
+                top: auto;
+                right: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-section {
+                flex: 1 1 100%;
+            }
+            .viewer-controls {
+                padding: 8px 12px;
+                gap: 5px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Robotic Arm Component Selection</h1>
-        <p>Motors, Harmonic Drives & Joint Modules for ~40Nm Joints</p>
+        <h1>7-DOF Robotic Arm</h1>
+        <p>KUKA iiwa-style Redundant Manipulator with RobStride Actuators</p>
         <div class="specs">
             <div class="spec">
-                <div class="spec-label">Target Torque</div>
-                <div class="spec-value">40 Nm</div>
-                <div class="spec-note">rated continuous</div>
+                <div class="spec-label">Degrees of Freedom</div>
+                <div class="spec-value">7 DOF</div>
+                <div class="spec-note">redundant design</div>
             </div>
             <div class="spec">
-                <div class="spec-label">Gear Ratio</div>
-                <div class="spec-value">100:1</div>
-                <div class="spec-note">typical range</div>
+                <div class="spec-label">Reach</div>
+                <div class="spec-value">~900mm</div>
+                <div class="spec-note">extended</div>
             </div>
             <div class="spec">
-                <div class="spec-label">Backlash Target</div>
-                <div class="spec-value">&lt;20 arcsec</div>
-                <div class="spec-note">precision grade</div>
+                <div class="spec-label">Payload</div>
+                <div class="spec-value">~5 kg</div>
+                <div class="spec-note">at full reach</div>
             </div>
             <div class="spec">
-                <div class="spec-label">Application</div>
-                <div class="spec-value">6-DOF Arm</div>
-                <div class="spec-note">collaborative robot</div>
+                <div class="spec-label">Actuators</div>
+                <div class="spec-value">RobStride</div>
+                <div class="spec-note">04/03/02 series</div>
             </div>
         </div>
     </header>
 
     <nav>
+        <a href="#3d-model">3D Model</a>
         <a href="#motors">Motors</a>
         <a href="#harmonic-drives">Harmonic Drives</a>
         <a href="#joint-modules">Joint Modules</a>
@@ -427,6 +688,88 @@
     </nav>
 
     <main>
+        <!-- 3D Model Viewer Section -->
+        <section id="3d-model" class="viewer-section">
+            <div class="section-header">
+                <h2>Interactive 3D Model</h2>
+                <span class="section-tag">7-DOF ARM</span>
+            </div>
+            <div class="viewer-container">
+                <div class="viewer-sidebar">
+                    <div class="sidebar-section">
+                        <h4>Arm Pose</h4>
+                        <button class="pose-btn active" data-pose="home">
+                            <h3>Home Position</h3>
+                            <p>All joints at 0 degrees</p>
+                        </button>
+                        <button class="pose-btn" data-pose="extended">
+                            <h3>Extended</h3>
+                            <p>Arm stretched out</p>
+                        </button>
+                        <button class="pose-btn" data-pose="folded">
+                            <h3>Folded</h3>
+                            <p>Compact position</p>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h4>View Options</h4>
+                        <button class="view-btn" id="btn-wireframe">Toggle Wireframe</button>
+                        <button class="view-btn" id="btn-rotate">Auto Rotate</button>
+                        <button class="view-btn" id="btn-reset">Reset View</button>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h4>Download Models</h4>
+                        <div class="downloads-grid" style="display: block;">
+                            <div class="download-card" style="margin-bottom: 10px;">
+                                <h4>Complete Arm</h4>
+                                <a href="solidworks/robotic_arm_7dof.stl" download>STL</a>
+                                <a href="solidworks/robotic_arm_7dof.scad" download>SCAD</a>
+                            </div>
+                            <div class="download-card">
+                                <h4>Actuators</h4>
+                                <a href="solidworks/robstride_04.stl" download>RS04</a>
+                                <a href="solidworks/robstride_03.stl" download>RS03</a>
+                                <a href="solidworks/robstride_02.stl" download>RS02</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="viewer-main">
+                    <div id="arm-viewer"></div>
+                    <div class="viewer-loading" id="arm-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading 3D model...</p>
+                    </div>
+                    <div class="arm-info-panel">
+                        <h2 id="arm-title">7-DOF Robotic Arm</h2>
+                        <table>
+                            <tr><td>Joints</td><td>7 (redundant)</td></tr>
+                            <tr><td>Reach</td><td>~900mm</td></tr>
+                            <tr><td>Payload</td><td>~5kg</td></tr>
+                            <tr><td>Weight</td><td>~15kg</td></tr>
+                        </table>
+                        <div class="joint-config">
+                            <h5>Joint Configuration</h5>
+                            <table id="joint-table">
+                                <tr><td>J1-J4</td><td>RobStride 04 (40Nm)</td></tr>
+                                <tr><td>J5</td><td>RobStride 03 (20Nm)</td></tr>
+                                <tr><td>J6-J7</td><td>RobStride 02 (8Nm)</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="viewer-controls">
+                        <button class="control-btn" data-view="front">Front</button>
+                        <button class="control-btn" data-view="side">Side</button>
+                        <button class="control-btn" data-view="top">Top</button>
+                        <button class="control-btn" data-view="iso">Isometric</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Motors Section -->
         <section id="motors" class="section">
             <div class="section-header">
@@ -1005,19 +1348,267 @@
     </main>
 
     <footer>
-        <p>Robotic Arm Component Selection Guide</p>
+        <p>7-DOF Robotic Arm Design & Component Selection</p>
         <p><a href="index.html">Back to Harmonic Drive Drawings</a></p>
     </footer>
 
+    <!-- Three.js Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+
     <script>
-        // Highlight active nav item on scroll
-        const sections = document.querySelectorAll('.section');
-        const navLinks = document.querySelectorAll('nav a:not(.back-link)');
+        // ============================================
+        // 3D VIEWER FOR ROBOTIC ARM
+        // ============================================
+        let armScene, armCamera, armRenderer, armControls, armMesh;
+        let armIsWireframe = false;
+        let armAutoRotate = false;
+
+        // Model files for each pose
+        const armPoses = {
+            home: {
+                name: 'Home Position',
+                file: 'solidworks/robotic_arm_7dof.stl',
+                description: 'All joints at 0 degrees'
+            },
+            extended: {
+                name: 'Extended',
+                file: 'solidworks/robotic_arm_extended.stl',
+                description: 'Arm stretched outward (J2 at 45 deg)'
+            },
+            folded: {
+                name: 'Folded',
+                file: 'solidworks/robotic_arm_folded.stl',
+                description: 'Compact position (elbow bent)'
+            }
+        };
+
+        function initArmViewer() {
+            var container = document.getElementById('arm-viewer');
+            if (!container) return;
+
+            // Scene
+            armScene = new THREE.Scene();
+            armScene.background = new THREE.Color(0x0d0d1a);
+
+            // Camera
+            armCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 5000);
+            armCamera.position.set(800, 600, 800);
+
+            // Renderer
+            armRenderer = new THREE.WebGLRenderer({ antialias: true });
+            armRenderer.setSize(container.clientWidth, container.clientHeight);
+            armRenderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(armRenderer.domElement);
+
+            // Controls
+            armControls = new THREE.OrbitControls(armCamera, armRenderer.domElement);
+            armControls.enableDamping = true;
+            armControls.dampingFactor = 0.05;
+            armControls.minDistance = 200;
+            armControls.maxDistance = 2000;
+
+            // Lights
+            var ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            armScene.add(ambientLight);
+
+            var directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight1.position.set(1, 1, 1);
+            armScene.add(directionalLight1);
+
+            var directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4);
+            directionalLight2.position.set(-1, -0.5, -1);
+            armScene.add(directionalLight2);
+
+            var directionalLight3 = new THREE.DirectionalLight(0xe94560, 0.3);
+            directionalLight3.position.set(0, 1, 0);
+            armScene.add(directionalLight3);
+
+            // Grid
+            var gridHelper = new THREE.GridHelper(1000, 20, 0x444444, 0x222222);
+            armScene.add(gridHelper);
+
+            // Axes helper
+            var axesHelper = new THREE.AxesHelper(200);
+            armScene.add(axesHelper);
+
+            // Load initial model
+            loadArmModel('home');
+
+            // Handle resize
+            window.addEventListener('resize', onArmWindowResize);
+
+            // Pose buttons
+            document.querySelectorAll('.pose-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.pose-btn').forEach(function(b) {
+                        b.classList.remove('active');
+                    });
+                    btn.classList.add('active');
+                    loadArmModel(btn.dataset.pose);
+                });
+            });
+
+            // View buttons
+            document.querySelectorAll('.control-btn[data-view]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    setArmView(btn.dataset.view);
+                });
+            });
+
+            // Control buttons
+            var wireframeBtn = document.getElementById('btn-wireframe');
+            if (wireframeBtn) {
+                wireframeBtn.addEventListener('click', toggleArmWireframe);
+            }
+
+            var resetBtn = document.getElementById('btn-reset');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', resetArmCamera);
+            }
+
+            var rotateBtn = document.getElementById('btn-rotate');
+            if (rotateBtn) {
+                rotateBtn.addEventListener('click', toggleArmAutoRotate);
+            }
+
+            animateArm();
+        }
+
+        function loadArmModel(poseKey) {
+            var pose = armPoses[poseKey];
+            var loadingEl = document.getElementById('arm-loading');
+            if (loadingEl) loadingEl.style.display = 'block';
+
+            // Update info panel title
+            var titleEl = document.getElementById('arm-title');
+            if (titleEl) titleEl.textContent = pose.name;
+
+            // Remove existing mesh
+            if (armMesh) {
+                armScene.remove(armMesh);
+                armMesh.geometry.dispose();
+                armMesh.material.dispose();
+            }
+
+            // Load STL
+            var loader = new THREE.STLLoader();
+            loader.load(pose.file, function(geometry) {
+                geometry.computeVertexNormals();
+                geometry.center();
+
+                var material = new THREE.MeshPhongMaterial({
+                    color: 0x808080,
+                    specular: 0x444444,
+                    shininess: 30,
+                    wireframe: armIsWireframe
+                });
+
+                armMesh = new THREE.Mesh(geometry, material);
+
+                // Scale and position
+                var box = new THREE.Box3().setFromObject(armMesh);
+                var size = box.getSize(new THREE.Vector3());
+                var maxDim = Math.max(size.x, size.y, size.z);
+                var scale = 400 / maxDim;
+                armMesh.scale.set(scale, scale, scale);
+
+                // Rotate to stand upright (Z-up to Y-up)
+                armMesh.rotation.x = -Math.PI / 2;
+
+                armScene.add(armMesh);
+                if (loadingEl) loadingEl.style.display = 'none';
+
+            }, function(xhr) {
+                // Progress callback
+                if (loadingEl) {
+                    var percent = Math.round(xhr.loaded / xhr.total * 100);
+                    loadingEl.querySelector('p').textContent = 'Loading... ' + percent + '%';
+                }
+            }, function(error) {
+                console.error('Error loading arm model:', error);
+                if (loadingEl) {
+                    loadingEl.querySelector('p').textContent = 'Error loading model';
+                }
+            });
+        }
+
+        function onArmWindowResize() {
+            var container = document.getElementById('arm-viewer');
+            if (!container || !armCamera || !armRenderer) return;
+            armCamera.aspect = container.clientWidth / container.clientHeight;
+            armCamera.updateProjectionMatrix();
+            armRenderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animateArm() {
+            requestAnimationFrame(animateArm);
+            if (armControls) armControls.update();
+            if (armAutoRotate && armMesh) {
+                armMesh.rotation.z += 0.005;
+            }
+            if (armRenderer && armScene && armCamera) {
+                armRenderer.render(armScene, armCamera);
+            }
+        }
+
+        function setArmView(view) {
+            var distance = 800;
+            switch(view) {
+                case 'front':
+                    armCamera.position.set(0, 200, distance);
+                    break;
+                case 'top':
+                    armCamera.position.set(0, distance, 0);
+                    break;
+                case 'side':
+                    armCamera.position.set(distance, 200, 0);
+                    break;
+                case 'iso':
+                    armCamera.position.set(distance * 0.7, distance * 0.5, distance * 0.7);
+                    break;
+            }
+            armCamera.lookAt(0, 150, 0);
+            if (armControls) {
+                armControls.target.set(0, 150, 0);
+                armControls.update();
+            }
+        }
+
+        function toggleArmWireframe() {
+            armIsWireframe = !armIsWireframe;
+            if (armMesh) {
+                armMesh.material.wireframe = armIsWireframe;
+            }
+        }
+
+        function resetArmCamera() {
+            armCamera.position.set(800, 600, 800);
+            armCamera.lookAt(0, 150, 0);
+            if (armControls) {
+                armControls.target.set(0, 150, 0);
+                armControls.reset();
+            }
+        }
+
+        function toggleArmAutoRotate() {
+            armAutoRotate = !armAutoRotate;
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', initArmViewer);
+
+        // ============================================
+        // SCROLL HIGHLIGHTING
+        // ============================================
+        var sections = document.querySelectorAll('.section, .viewer-section');
+        var navLinks = document.querySelectorAll('nav a:not(.back-link)');
 
         window.addEventListener('scroll', function() {
-            let current = '';
+            var current = '';
             sections.forEach(function(section) {
-                const sectionTop = section.offsetTop;
+                var sectionTop = section.offsetTop;
                 if (scrollY >= sectionTop - 200) {
                     current = section.getAttribute('id');
                 }
