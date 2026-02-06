@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotic Arm Component Selection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+        }
+        header {
+            background: #16213e;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #0f3460;
+        }
+        h1 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        .specs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            padding: 0 10px;
+        }
+        .spec {
+            background: #0f3460;
+            padding: 10px 15px;
+            border-radius: 5px;
+            min-width: 80px;
+        }
+        .spec-label {
+            color: #888;
+            font-size: 12px;
+        }
+        .spec-value {
+            color: #e94560;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .spec-note {
+            color: #888;
+            font-size: 12px;
+        }
+        nav {
+            background: #16213e;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #0f3460;
+        }
+        nav a {
+            color: #eee;
+            text-decoration: none;
+            padding: 10px 16px;
+            background: #0f3460;
+            border-radius: 5px;
+            transition: background 0.2s;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        nav a:hover, nav a.active {
+            background: #e94560;
+        }
+        nav a.back-link {
+            background: #2d4a22;
+        }
+        nav a.back-link:hover {
+            background: #4a7c30;
+        }
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            background: #16213e;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .section-header {
+            background: #0f3460;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section-header h2 {
+            color: #e94560;
+        }
+        .section-tag {
+            background: #e94560;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .section-content {
+            padding: 20px;
+        }
+        .section-intro {
+            color: #aaa;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #0f3460;
+        }
+        .comparison-table th {
+            background: #0f3460;
+            color: #e94560;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .comparison-table tr:hover {
+            background: rgba(233, 69, 96, 0.1);
+        }
+        .comparison-table .highlight {
+            background: rgba(233, 69, 96, 0.15);
+        }
+        .comparison-table .product-name {
+            font-weight: bold;
+            color: #fff;
+        }
+        .comparison-table .price {
+            color: #51cf66;
+            font-weight: bold;
+        }
+        .comparison-table .notes {
+            color: #aaa;
+            font-size: 12px;
+        }
+        .comparison-table a {
+            color: #4a9eff;
+            text-decoration: none;
+        }
+        .comparison-table a:hover {
+            text-decoration: underline;
+        }
+
+        /* Quality badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .badge-premium {
+            background: #ffd43b;
+            color: #1a1a2e;
+        }
+        .badge-high {
+            background: #51cf66;
+            color: #1a1a2e;
+        }
+        .badge-mid {
+            background: #4a9eff;
+            color: #1a1a2e;
+        }
+        .badge-budget {
+            background: #868e96;
+            color: #fff;
+        }
+        .badge-best-value {
+            background: #e94560;
+            color: #fff;
+        }
+
+        /* Decision matrix */
+        .decision-card {
+            background: #1a1a2e;
+            border: 1px solid #0f3460;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .decision-card h4 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        .decision-card .recommendation {
+            color: #51cf66;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .decision-card .reason {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Links section */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .link-card {
+            background: #1a1a2e;
+            border: 1px solid #0f3460;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .link-card h4 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .link-card a {
+            display: block;
+            color: #4a9eff;
+            text-decoration: none;
+            padding: 5px 0;
+            font-size: 13px;
+        }
+        .link-card a:hover {
+            color: #e94560;
+        }
+
+        /* Subsection headers */
+        .subsection {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #0f3460;
+        }
+        .subsection:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+        .subsection h3 {
+            color: #ffd43b;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        /* Size guide */
+        .size-guide {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .size-card {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .size-card .size {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e94560;
+        }
+        .size-card .torque {
+            font-size: 14px;
+            color: #51cf66;
+            margin-top: 5px;
+        }
+        .size-card .use {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            border-top: 1px solid #0f3460;
+        }
+        footer a {
+            color: #4a9eff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #e94560;
+        }
+
+        /* Table scroll wrapper for mobile */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .comparison-table {
+                font-size: 12px;
+            }
+            .comparison-table th, .comparison-table td {
+                padding: 8px 6px;
+            }
+            .section-content {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 10px;
+            }
+            header h1 {
+                font-size: 1.3rem;
+                line-height: 1.3;
+            }
+            header p {
+                font-size: 0.9rem;
+            }
+            .specs {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+            .spec {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+            }
+            nav {
+                padding: 10px;
+                gap: 5px;
+            }
+            nav a {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+                flex: 1 1 calc(50% - 5px);
+                justify-content: center;
+                text-align: center;
+            }
+            main {
+                padding: 10px;
+            }
+            .section-header {
+                padding: 10px 15px;
+            }
+            .section-header h2 {
+                font-size: 1.1rem;
+            }
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body { background: white; color: black; }
+            nav { display: none; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Robotic Arm Component Selection</h1>
+        <p>Motors, Harmonic Drives & Joint Modules for ~40Nm Joints</p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Target Torque</div>
+                <div class="spec-value">40 Nm</div>
+                <div class="spec-note">rated continuous</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Gear Ratio</div>
+                <div class="spec-value">100:1</div>
+                <div class="spec-note">typical range</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Backlash Target</div>
+                <div class="spec-value">&lt;20 arcsec</div>
+                <div class="spec-note">precision grade</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Application</div>
+                <div class="spec-value">6-DOF Arm</div>
+                <div class="spec-note">collaborative robot</div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#motors">Motors</a>
+        <a href="#harmonic-drives">Harmonic Drives</a>
+        <a href="#joint-modules">Joint Modules</a>
+        <a href="#guide">Selection Guide</a>
+        <a href="#links">Supplier Links</a>
+        <a href="index.html" class="back-link">Back to HD Drawings</a>
+    </nav>
+
+    <main>
+        <!-- Motors Section -->
+        <section id="motors" class="section">
+            <div class="section-header">
+                <h2>Motor Options</h2>
+                <span class="section-tag">BLDC & INTEGRATED</span>
+            </div>
+            <div class="section-content">
+                <p class="section-intro">
+                    Chinese manufacturers now offer Maxon-quality BLDC motors at a fraction of the cost.
+                    For robotic arms, integrated actuators (motor + planetary + driver + encoder) provide
+                    the best value and simplify integration. Frameless motors are ideal for custom builds
+                    with harmonic drives.
+                </p>
+
+                <div class="subsection">
+                    <h3>Integrated Actuators (Motor + Planetary + Driver + Encoder)</h3>
+                    <p class="section-intro">Complete plug-and-play solutions. These include planetary gearboxes (9:1 to 35:1),
+                    FOC drivers, and high-resolution encoders. Output torque values shown. For harmonic drive output,
+                    multiply by your harmonic ratio (e.g., 40Nm × 10:1 additional = 400Nm theoretical, limited by harmonic capacity).</p>
+
+                    <div class="table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Rated Torque</th>
+                                    <th>Peak Torque</th>
+                                    <th>Weight</th>
+                                    <th>Price</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight">
+                                    <td class="product-name">RobStride 04 <span class="badge badge-best-value">Best Value</span></td>
+                                    <td>40 Nm</td>
+                                    <td>120 Nm</td>
+                                    <td>1.42 kg</td>
+                                    <td class="price">~$280</td>
+                                    <td class="notes">9:1 planetary, CAN bus, 19-bit encoder. Exceptional torque/$ ratio.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">RobStride 03</td>
+                                    <td>20 Nm</td>
+                                    <td>60 Nm</td>
+                                    <td>0.88 kg</td>
+                                    <td class="price">~$250</td>
+                                    <td class="notes">9:1 planetary. Good for wrist/elbow joints.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">RobStride 02</td>
+                                    <td>8 Nm</td>
+                                    <td>25 Nm</td>
+                                    <td>0.54 kg</td>
+                                    <td class="price">~$230</td>
+                                    <td class="notes">9:1 planetary. Compact for end-effector joints.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">MyActuator RMD-X10 S2</td>
+                                    <td>50 Nm</td>
+                                    <td>100 Nm</td>
+                                    <td>1.70 kg</td>
+                                    <td class="price">~$550-650</td>
+                                    <td class="notes">35:1 planetary, mature product line, good documentation. <a href="https://www.robotshop.com" target="_blank">RobotShop stock</a>.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">MyActuator RMD-X8 S2</td>
+                                    <td>16 Nm</td>
+                                    <td>35 Nm</td>
+                                    <td>0.67 kg</td>
+                                    <td class="price">~$350-400</td>
+                                    <td class="notes">35:1 planetary. Popular mid-range option.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">CubeMars AK10-9 V3.0 <span class="badge badge-premium">Premium</span></td>
+                                    <td>18 Nm</td>
+                                    <td>53 Nm</td>
+                                    <td>0.94 kg</td>
+                                    <td class="price">~$799</td>
+                                    <td class="notes">9:1 planetary, established brand, MIT Mini Cheetah heritage.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">CubeMars AK80-9 V3.0</td>
+                                    <td>9 Nm</td>
+                                    <td>22 Nm</td>
+                                    <td>0.49 kg</td>
+                                    <td class="price">~$580</td>
+                                    <td class="notes">9:1 planetary, very compact. Good for small arms.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">Unitree A1 Motor</td>
+                                    <td>-</td>
+                                    <td>33.5 Nm</td>
+                                    <td>0.61 kg</td>
+                                    <td class="price">~$400-500</td>
+                                    <td class="notes">Direct drive (no gearbox). Often backordered. Unitree quadruped motor.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Frameless Motors (for Custom Harmonic Drive Builds)</h3>
+                    <p class="section-intro">Use these with your own harmonic drive for maximum flexibility and repairability.
+                    At 100:1 reduction, a 2-4 Nm motor input yields 200-400 Nm theoretical output (limited by harmonic capacity to ~40Nm rated).</p>
+
+                    <div class="table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Peak Torque</th>
+                                    <th>Voltage</th>
+                                    <th>Price Est.</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="product-name">CubeMars RI80</td>
+                                    <td>2.5 Nm</td>
+                                    <td>48V</td>
+                                    <td class="price">~$200-300</td>
+                                    <td class="notes">Frameless, hollow shaft option. Ideal for 100:1 harmonic input.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">CubeMars RI100</td>
+                                    <td>4.0 Nm</td>
+                                    <td>48V</td>
+                                    <td class="price">~$300-400</td>
+                                    <td class="notes">Larger frameless motor for higher power applications.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">MyActuator RMD-L-7015</td>
+                                    <td>3.8 Nm</td>
+                                    <td>24V</td>
+                                    <td class="price">~$150-200</td>
+                                    <td class="notes">Direct drive BLDC, integrated driver. Works standalone or with reducer.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">T-Motor U8 Lite</td>
+                                    <td>2.8 Nm</td>
+                                    <td>24V</td>
+                                    <td class="price">~$100-150</td>
+                                    <td class="notes">Drone motor, no encoder. Add AS5048A for position sensing.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Harmonic Drives Section -->
+        <section id="harmonic-drives" class="section">
+            <div class="section-header">
+                <h2>Harmonic Drive Suppliers</h2>
+                <span class="section-tag">STRAIN WAVE GEARS</span>
+            </div>
+            <div class="section-content">
+                <p class="section-intro">
+                    Harmonic drives (strain wave gears) provide zero-backlash, high-ratio reduction in a compact package.
+                    Japanese originals (Harmonic Drive AG) are premium but expensive. Chinese alternatives from Laifual, Leaderdrive,
+                    and others now offer 80-90% of the performance at 20-30% of the cost.
+                </p>
+
+                <div class="subsection">
+                    <h3>Size Selection Guide</h3>
+                    <p class="section-intro">Harmonic drive sizes correspond to their rated torque capacity. For 40Nm joints, Size 20 is the standard choice.</p>
+
+                    <div class="size-guide">
+                        <div class="size-card">
+                            <div class="size">14</div>
+                            <div class="torque">16 Nm</div>
+                            <div class="use">Wrist, small joints</div>
+                        </div>
+                        <div class="size-card">
+                            <div class="size">17</div>
+                            <div class="torque">26 Nm</div>
+                            <div class="use">Elbow, mid joints</div>
+                        </div>
+                        <div class="size-card" style="border: 2px solid #e94560;">
+                            <div class="size">20</div>
+                            <div class="torque">40 Nm</div>
+                            <div class="use">Shoulder, main joints</div>
+                        </div>
+                        <div class="size-card">
+                            <div class="size">25</div>
+                            <div class="torque">70 Nm</div>
+                            <div class="use">Base, heavy joints</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Supplier Comparison (Size 20, 100:1 Ratio)</h3>
+
+                    <div class="table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Supplier</th>
+                                    <th>Model</th>
+                                    <th>Rated Torque</th>
+                                    <th>Backlash</th>
+                                    <th>Price Est.</th>
+                                    <th>Quality</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="product-name">Harmonic Drive AG</td>
+                                    <td>CSF-20-100</td>
+                                    <td>40 Nm</td>
+                                    <td>&lt;1 arcmin</td>
+                                    <td class="price">$800-1500</td>
+                                    <td><span class="badge badge-premium">Premium</span></td>
+                                    <td class="notes">Original manufacturer. Gold standard for precision.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">Nidec Shimpo</td>
+                                    <td>FLEXWAVE-60</td>
+                                    <td>40+ Nm</td>
+                                    <td>Zero</td>
+                                    <td class="price">$500-1000</td>
+                                    <td><span class="badge badge-premium">Premium</span></td>
+                                    <td class="notes">Japanese quality. True zero backlash design.</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td class="product-name">Laifual Drive <span class="badge badge-best-value">Best Value</span></td>
+                                    <td>FSG-20-100</td>
+                                    <td>40 Nm</td>
+                                    <td>≤10 arcsec</td>
+                                    <td class="price">$200-400</td>
+                                    <td><span class="badge badge-high">High</span></td>
+                                    <td class="notes">Best Chinese quality. OEM for many robotics companies.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">Leaderdrive</td>
+                                    <td>LHSG-20-100</td>
+                                    <td>33+ Nm</td>
+                                    <td>≤10 arcsec</td>
+                                    <td class="price">$200-400</td>
+                                    <td><span class="badge badge-high">High</span></td>
+                                    <td class="notes">Good quality, widely used in Chinese robots.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">Arcsec / ZD Drive</td>
+                                    <td>ADHG-20-100</td>
+                                    <td>40 Nm</td>
+                                    <td>≤20 arcsec</td>
+                                    <td class="price">$150-350</td>
+                                    <td><span class="badge badge-mid">Mid-High</span></td>
+                                    <td class="notes">Growing manufacturer, good value tier.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">PICEA Motion</td>
+                                    <td>HMCG-20-100</td>
+                                    <td>40 Nm</td>
+                                    <td>≤20 arcsec</td>
+                                    <td class="price">$150-350</td>
+                                    <td><span class="badge badge-mid">Mid-High</span></td>
+                                    <td class="notes">Solid mid-tier option.</td>
+                                </tr>
+                                <tr>
+                                    <td class="product-name">QXCIVR (Amazon)</td>
+                                    <td>PG20-100</td>
+                                    <td>52 Nm</td>
+                                    <td>20 arcsec</td>
+                                    <td class="price">$80-200</td>
+                                    <td><span class="badge badge-budget">Budget</span></td>
+                                    <td class="notes">Amazon Prime shipping. Good for prototypes. QC varies.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Quality Tier Explanation</h3>
+                    <div class="decision-card">
+                        <h4>Premium (Harmonic Drive AG, Nidec)</h4>
+                        <div class="reason">
+                            &lt;1 arcmin backlash, certified specs, proven 10,000+ hour lifespan.
+                            Use for: Production robots, medical devices, aerospace.
+                        </div>
+                    </div>
+                    <div class="decision-card">
+                        <h4>High (Laifual, Leaderdrive)</h4>
+                        <div class="reason">
+                            ≤10 arcsec backlash, consistent quality, 5,000+ hour typical life.
+                            Use for: Prosumer robots, research, small-batch production.
+                        </div>
+                    </div>
+                    <div class="decision-card">
+                        <h4>Mid-High (Arcsec, PICEA)</h4>
+                        <div class="reason">
+                            ≤20 arcsec backlash, decent QC, variable lifespan.
+                            Use for: Prototypes, hobby projects, non-critical applications.
+                        </div>
+                    </div>
+                    <div class="decision-card">
+                        <h4>Budget (QXCIVR, generic)</h4>
+                        <div class="reason">
+                            20+ arcsec backlash, inconsistent QC, shorter lifespan.
+                            Use for: Learning, proof-of-concept, disposable prototypes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Joint Modules Section -->
+        <section id="joint-modules" class="section">
+            <div class="section-header">
+                <h2>Integrated Joint Modules</h2>
+                <span class="section-tag">ALL-IN-ONE</span>
+            </div>
+            <div class="section-content">
+                <p class="section-intro">
+                    Complete motor + harmonic drive + encoder + driver units. These provide the fastest path to a working robot
+                    but sacrifice flexibility and repairability. If the motor or harmonic fails, you replace the entire unit.
+                </p>
+
+                <div class="table-wrapper">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Peak Torque</th>
+                                <th>Ratio</th>
+                                <th>Price Est.</th>
+                                <th>Features</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight">
+                                <td class="product-name">ZeroErr eRob90 <span class="badge badge-best-value">Recommended</span></td>
+                                <td>50 Nm</td>
+                                <td>50-160:1</td>
+                                <td class="price">$500-1500</td>
+                                <td class="notes">19-bit absolute encoder, EtherCAT/CANopen, ±7 arcsec repeatability. Best integrated solution.</td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">ZeroErr eRob110</td>
+                                <td>96 Nm</td>
+                                <td>50-160:1</td>
+                                <td class="price">$800-2000</td>
+                                <td class="notes">Larger size for base joints. Industrial grade.</td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Tinsmith TD-70-90-PRO</td>
+                                <td>~50 Nm</td>
+                                <td>50-100:1</td>
+                                <td class="price">$400-800</td>
+                                <td class="notes">CANopen interface, dual encoder (motor + output), good documentation.</td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">INNFOS SCA-H1</td>
+                                <td>30 Nm</td>
+                                <td>36:1</td>
+                                <td class="price">$300-500</td>
+                                <td class="notes">Series elastic actuator. Force control capability.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Integrated vs Custom Build</h3>
+                    <div class="table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Factor</th>
+                                    <th>Integrated Module</th>
+                                    <th>Custom Build (Motor + Harmonic)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Development Time</td>
+                                    <td class="notes" style="color: #51cf66;">Fast - plug and play</td>
+                                    <td class="notes" style="color: #ffd43b;">Slower - mechanical integration needed</td>
+                                </tr>
+                                <tr>
+                                    <td>Repairability</td>
+                                    <td class="notes" style="color: #e94560;">Low - replace entire unit</td>
+                                    <td class="notes" style="color: #51cf66;">High - replace individual components</td>
+                                </tr>
+                                <tr>
+                                    <td>Cost (40Nm)</td>
+                                    <td class="notes">$500-1500 per joint</td>
+                                    <td class="notes">$350-600 per joint (motor + harmonic + encoder)</td>
+                                </tr>
+                                <tr>
+                                    <td>Flexibility</td>
+                                    <td class="notes" style="color: #ffd43b;">Limited to available ratios</td>
+                                    <td class="notes" style="color: #51cf66;">Any ratio, any combination</td>
+                                </tr>
+                                <tr>
+                                    <td>Best For</td>
+                                    <td class="notes">Rapid prototyping, small batches</td>
+                                    <td class="notes">Production, custom requirements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Selection Guide -->
+        <section id="guide" class="section">
+            <div class="section-header">
+                <h2>Component Selection Guide</h2>
+                <span class="section-tag">DECISION MATRIX</span>
+            </div>
+            <div class="section-content">
+                <p class="section-intro">
+                    Choose your configuration based on your primary requirements. All recommendations assume ~40Nm output torque for main arm joints.
+                </p>
+
+                <div class="decision-card">
+                    <h4>Budget Prototype (&lt;$300/joint)</h4>
+                    <div class="recommendation">RobStride 04</div>
+                    <div class="reason">
+                        At ~$280, the RobStride 04 delivers 40Nm rated torque with integrated driver, encoder, and 9:1 planetary.
+                        Best value for getting a robot moving quickly. Use directly for lower-precision applications or add
+                        harmonic for high precision.
+                    </div>
+                </div>
+
+                <div class="decision-card">
+                    <h4>High Precision Build (&lt;10 arcsec)</h4>
+                    <div class="recommendation">ZeroErr eRob90 OR Custom (RI80 + Laifual FSG-20)</div>
+                    <div class="reason">
+                        eRob90 ($500-1500) for fastest integration with ±7 arcsec repeatability.
+                        Custom build with CubeMars RI80 (~$250) + Laifual FSG-20-100 (~$300) + encoder (~$50) = ~$600 total,
+                        but more flexible and repairable.
+                    </div>
+                </div>
+
+                <div class="decision-card">
+                    <h4>Quick Availability (Need it now)</h4>
+                    <div class="recommendation">MyActuator RMD-X10 S2</div>
+                    <div class="reason">
+                        Available from RobotShop with US shipping. Mature product with good documentation and community support.
+                        $550-650 for 50Nm rated. Not the cheapest, but reliable supply chain.
+                    </div>
+                </div>
+
+                <div class="decision-card">
+                    <h4>Maximum Torque/$ Ratio</h4>
+                    <div class="recommendation">RobStride 04 + QXCIVR PG20-100</div>
+                    <div class="reason">
+                        RobStride 04 (~$280) driving a QXCIVR harmonic (~$150) = ~$430 for up to 400Nm theoretical
+                        (limited by harmonic capacity). Budget option for learning or disposable prototypes.
+                        QC varies on the harmonic - order extras.
+                    </div>
+                </div>
+
+                <div class="decision-card">
+                    <h4>Production Robot (Reliability First)</h4>
+                    <div class="recommendation">Laifual FSG-20 + CubeMars RI80 + Custom Housing</div>
+                    <div class="reason">
+                        Laifual harmonics are OEM-grade with consistent quality. Combined with a quality frameless motor,
+                        this configuration offers the best balance of performance, cost, and long-term reliability.
+                        Plan for ~$500-700/joint including housing and encoder.
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Summary Decision Table</h3>
+                    <div class="table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Use Case</th>
+                                    <th>Recommendation</th>
+                                    <th>Est. Cost/Joint</th>
+                                    <th>Precision</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight">
+                                    <td>Budget prototype</td>
+                                    <td class="product-name">RobStride 04</td>
+                                    <td class="price">~$280</td>
+                                    <td class="notes">Medium (planetary only)</td>
+                                </tr>
+                                <tr>
+                                    <td>High precision</td>
+                                    <td class="product-name">eRob90</td>
+                                    <td class="price">$500-1500</td>
+                                    <td class="notes">High (±7 arcsec)</td>
+                                </tr>
+                                <tr>
+                                    <td>Quick availability</td>
+                                    <td class="product-name">RMD-X10 S2</td>
+                                    <td class="price">~$550-650</td>
+                                    <td class="notes">Medium</td>
+                                </tr>
+                                <tr>
+                                    <td>Maximum value</td>
+                                    <td class="product-name">RobStride 04</td>
+                                    <td class="price">~$280</td>
+                                    <td class="notes">Medium</td>
+                                </tr>
+                                <tr>
+                                    <td>Custom build</td>
+                                    <td class="product-name">RI80 + Laifual FSG-20</td>
+                                    <td class="price">~$500-700</td>
+                                    <td class="notes">High (≤10 arcsec)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Links Section -->
+        <section id="links" class="section">
+            <div class="section-header">
+                <h2>Supplier Links</h2>
+                <span class="section-tag">RESOURCES</span>
+            </div>
+            <div class="section-content">
+                <div class="links-grid">
+                    <div class="link-card">
+                        <h4>Integrated Actuator Suppliers</h4>
+                        <a href="https://www.robstride.com/" target="_blank">RobStride (Unitree subsidiary)</a>
+                        <a href="https://www.cubemars.com/" target="_blank">CubeMars</a>
+                        <a href="https://www.myactuator.com/" target="_blank">MyActuator</a>
+                        <a href="https://shop.unitree.com/" target="_blank">Unitree Shop</a>
+                        <a href="https://www.robotshop.com/products/myactuator" target="_blank">RobotShop (MyActuator)</a>
+                    </div>
+                    <div class="link-card">
+                        <h4>Harmonic Drive Suppliers</h4>
+                        <a href="https://www.laifualdrive.com/" target="_blank">Laifual Drive</a>
+                        <a href="https://www.leaderdrive.com/" target="_blank">Leaderdrive</a>
+                        <a href="https://www.arcsecdrive.com/" target="_blank">Arcsec Drive</a>
+                        <a href="https://www.piceamotiondrive.com/" target="_blank">PICEA Motion Drive</a>
+                        <a href="https://www.harmonicdrive.net/" target="_blank">Harmonic Drive AG (Original)</a>
+                        <a href="https://www.nidec-shimpo.com/" target="_blank">Nidec Shimpo</a>
+                    </div>
+                    <div class="link-card">
+                        <h4>Joint Module Suppliers</h4>
+                        <a href="https://en.zeroerr.cn/" target="_blank">ZeroErr (eRob series)</a>
+                        <a href="https://metonec.com/" target="_blank">Metonec / Tinsmith</a>
+                        <a href="https://www.innfos.com/" target="_blank">INNFOS (SCA actuators)</a>
+                    </div>
+                    <div class="link-card">
+                        <h4>Quick Purchase (Amazon/AliExpress)</h4>
+                        <a href="https://www.amazon.com/stores/QXCIVR" target="_blank">QXCIVR Harmonics (Amazon)</a>
+                        <a href="https://www.aliexpress.com/store/1100947247" target="_blank">Laifual AliExpress Store</a>
+                        <a href="https://www.aliexpress.com/store/910985003" target="_blank">MyActuator AliExpress Store</a>
+                    </div>
+                    <div class="link-card">
+                        <h4>Frameless Motors</h4>
+                        <a href="https://www.cubemars.com/goods-941-RI+Series.html" target="_blank">CubeMars RI Series</a>
+                        <a href="https://store.tmotor.com/" target="_blank">T-Motor Store</a>
+                    </div>
+                    <div class="link-card">
+                        <h4>Technical Resources</h4>
+                        <a href="https://www.youtube.com/@Skyentific" target="_blank">Skyentific (YouTube)</a>
+                        <a href="https://hackaday.io/project/12989-open-source-robotic-arm" target="_blank">Open Source Arm (Hackaday)</a>
+                        <a href="https://github.com/mjbots/moteus" target="_blank">Moteus Controller (GitHub)</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Robotic Arm Component Selection Guide</p>
+        <p><a href="index.html">Back to Harmonic Drive Drawings</a></p>
+    </footer>
+
+    <script>
+        // Highlight active nav item on scroll
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('nav a:not(.back-link)');
+
+        window.addEventListener('scroll', function() {
+            let current = '';
+            sections.forEach(function(section) {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

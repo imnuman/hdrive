@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmonic Drive Manufacturing Drawings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+        }
+        header {
+            background: #16213e;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #0f3460;
+        }
+        h1 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        .specs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            padding: 0 10px;
+        }
+        .spec {
+            background: #0f3460;
+            padding: 10px 15px;
+            border-radius: 5px;
+            min-width: 80px;
+        }
+        .spec-label {
+            color: #888;
+            font-size: 12px;
+        }
+        .spec-value {
+            color: #e94560;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .spec-mm {
+            color: #888;
+            font-size: 12px;
+        }
+        nav {
+            background: #16213e;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #0f3460;
+        }
+        nav a {
+            color: #eee;
+            text-decoration: none;
+            padding: 10px 16px;
+            background: #0f3460;
+            border-radius: 5px;
+            transition: background 0.2s;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        nav a:hover, nav a.active {
+            background: #e94560;
+        }
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .drawing-section {
+            background: #16213e;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .drawing-header {
+            background: #0f3460;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .drawing-header h2 {
+            color: #e94560;
+        }
+        .drawing-number {
+            background: #e94560;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .drawing-container {
+            background: white;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            overflow: auto;
+        }
+        .drawing-container svg,
+        .drawing-container object {
+            max-width: 100%;
+            height: auto;
+        }
+        .drawing-container object {
+            width: 100%;
+            min-height: 500px;
+        }
+        .notes {
+            padding: 15px 20px;
+            background: #1a1a2e;
+            border-top: 1px solid #0f3460;
+        }
+        .notes h3 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        .notes ul {
+            margin-left: 20px;
+        }
+        .notes li {
+            margin-bottom: 5px;
+            color: #aaa;
+        }
+        .download-links {
+            padding: 15px 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .download-links a {
+            background: #0f3460;
+            color: #eee;
+            padding: 12px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+        }
+        .download-links a:hover {
+            background: #e94560;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            border-top: 1px solid #0f3460;
+        }
+
+        /* ============================================
+           3D VIEWER SECTION STYLES
+           ============================================ */
+        .viewer-section {
+            background: #16213e;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .viewer-container {
+            display: flex;
+            min-height: 500px;
+        }
+        .viewer-sidebar {
+            width: 280px;
+            background: #16213e;
+            padding: 20px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .part-btn {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #0f3460;
+            border: none;
+            border-radius: 8px;
+            color: #eee;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            min-height: 44px;
+        }
+        .part-btn:hover {
+            background: #1a4a7a;
+        }
+        .part-btn.active {
+            background: #e94560;
+        }
+        .part-btn h3 {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        .part-btn p {
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+        .part-btn.active p {
+            color: #fcc;
+        }
+        .viewer-main {
+            flex: 1;
+            position: relative;
+            background: #0d0d1a;
+            min-height: 500px;
+        }
+        #viewer {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+        }
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background: rgba(22, 33, 62, 0.9);
+            padding: 10px 20px;
+            border-radius: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .control-btn {
+            padding: 10px 16px;
+            background: #0f3460;
+            border: none;
+            border-radius: 20px;
+            color: #eee;
+            cursor: pointer;
+            font-size: 0.85rem;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        .control-btn:hover {
+            background: #e94560;
+        }
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(22, 33, 62, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+        }
+        .info-panel h2 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .info-panel table {
+            width: 100%;
+            font-size: 0.85rem;
+        }
+        .info-panel td {
+            padding: 5px 0;
+        }
+        .info-panel td:first-child {
+            color: #888;
+        }
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #0f3460;
+            border-top-color: #e94560;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .color-picker {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #0f3460;
+        }
+        .color-picker label {
+            display: block;
+            margin-bottom: 8px;
+            color: #888;
+            font-size: 0.85rem;
+        }
+        .color-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .color-opt {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            min-width: 44px;
+            min-height: 44px;
+        }
+        .color-opt:hover, .color-opt.active {
+            border-color: #fff;
+        }
+
+        /* Grid for downloads */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .grid-item {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .grid-item h4 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        .grid-item p {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        /* Specifications Table */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .specs-table th, .specs-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #0f3460;
+        }
+        .specs-table th {
+            background: #0f3460;
+            color: #e94560;
+        }
+        .specs-table tr:hover {
+            background: rgba(233, 69, 96, 0.1);
+        }
+
+        /* ============================================
+           MOBILE RESPONSIVE STYLES
+           ============================================ */
+
+        /* Tablet (max-width: 768px) */
+        @media (max-width: 768px) {
+            .viewer-container {
+                flex-direction: column;
+            }
+            .viewer-sidebar {
+                width: 100%;
+                padding: 15px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .viewer-sidebar .part-btn {
+                flex: 1 1 calc(50% - 5px);
+                min-width: 140px;
+            }
+            .viewer-sidebar .view-options {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .viewer-sidebar .view-options .part-btn {
+                flex: 1;
+            }
+            .viewer-main {
+                height: 50vh;
+                min-height: 400px;
+            }
+            #viewer {
+                min-height: 400px;
+            }
+            .info-panel {
+                position: relative;
+                max-width: 100%;
+                margin: 10px;
+                top: auto;
+                right: auto;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .drawing-container object {
+                min-height: 300px;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .specs {
+                gap: 15px;
+            }
+            .spec {
+                padding: 8px 15px;
+            }
+        }
+
+        /* Phone (max-width: 480px) */
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 10px;
+            }
+            header h1 {
+                font-size: 1.1rem;
+                line-height: 1.3;
+                word-wrap: break-word;
+            }
+            header p {
+                font-size: 0.9rem;
+            }
+            .specs {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+            .spec {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+            }
+            nav {
+                padding: 10px;
+                gap: 5px;
+            }
+            nav a {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+                flex: 1 1 calc(50% - 5px);
+                justify-content: center;
+                text-align: center;
+            }
+            main {
+                padding: 10px;
+            }
+            .drawing-header {
+                padding: 10px 15px;
+            }
+            .drawing-header h2 {
+                font-size: 1.1rem;
+            }
+            .drawing-container {
+                padding: 10px;
+            }
+            .notes {
+                padding: 10px 15px;
+            }
+            .download-links {
+                flex-direction: column;
+                padding: 10px 15px;
+            }
+            .download-links a {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+            .viewer-sidebar .part-btn {
+                flex: 1 1 100%;
+            }
+            .control-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            .controls {
+                padding: 8px 12px;
+                gap: 5px;
+            }
+            .info-panel {
+                padding: 15px;
+            }
+            .specs-table th, .specs-table td {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media print {
+            body { background: white; color: black; }
+            nav { display: none; }
+            .drawing-section { break-inside: avoid; }
+            .viewer-section { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Harmonic Drive Manufacturing Drawings</h1>
+        <p>100:1 Ratio Strain Wave Gear for Robotic Arm</p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Gear Ratio</div>
+                <div class="spec-value">100:1</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Output Torque</div>
+                <div class="spec-value">40 Nm</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Outer Diameter</div>
+                <div class="spec-value">3.937 in</div>
+                <div class="spec-mm">(100 mm)</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Module</div>
+                <div class="spec-value">0.0157 in</div>
+                <div class="spec-mm">(0.4 mm)</div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#3d-viewer">3D Viewer</a>
+        <a href="#flex-spline">Flex Spline</a>
+        <a href="#circular-spline">Circular Spline</a>
+        <a href="#wave-generator">Wave Generator</a>
+        <a href="#tooth-profile">Tooth Profile</a>
+        <a href="#assembly">Assembly</a>
+        <a href="#dxf-profiles">DXF Profiles</a>
+        <a href="#detailed-parts">Detailed Parts</a>
+        <a href="#downloads">Downloads</a>
+        <a href="#specifications">Specifications</a>
+        <a href="robotic-arm.html" style="background: #2d4a22;">Robotic Arm</a>
+    </nav>
+
+    <main>
+        <!-- 3D Viewer Section -->
+        <section id="3d-viewer" class="viewer-section">
+            <div class="drawing-header">
+                <h2>Interactive 3D Model Viewer</h2>
+                <span class="drawing-number">3D</span>
+            </div>
+            <div class="viewer-container">
+                <div class="viewer-sidebar">
+                    <button class="part-btn active" data-part="assembly">
+                        <h3>Complete Assembly</h3>
+                        <p>All parts assembled</p>
+                    </button>
+                    <button class="part-btn" data-part="flex_spline">
+                        <h3>Flex Spline</h3>
+                        <p>200 teeth, cup-shaped</p>
+                    </button>
+                    <button class="part-btn" data-part="circular_spline">
+                        <h3>Circular Spline</h3>
+                        <p>202 internal teeth</p>
+                    </button>
+                    <button class="part-btn" data-part="wave_generator">
+                        <h3>Wave Generator</h3>
+                        <p>Elliptical cam</p>
+                    </button>
+
+                    <div class="view-options" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #0f3460;">
+                        <h4 style="color: #e94560; margin-bottom: 15px; width: 100%;">View Options</h4>
+                        <button class="part-btn" id="btn-wireframe">
+                            Toggle Wireframe
+                        </button>
+                        <button class="part-btn" id="btn-reset">
+                            Reset View
+                        </button>
+                        <button class="part-btn" id="btn-rotate">
+                            Auto Rotate
+                        </button>
+                    </div>
+                </div>
+
+                <div class="viewer-main">
+                    <div id="viewer"></div>
+                    <div class="loading" id="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading 3D Model...</p>
+                    </div>
+                    <div class="info-panel" id="info-panel">
+                        <h2 id="part-name">Complete Assembly</h2>
+                        <table id="part-specs">
+                            <tbody id="specs-body"></tbody>
+                        </table>
+                        <div class="color-picker">
+                            <label>Model Color:</label>
+                            <div class="color-options" id="color-options"></div>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <button class="control-btn" data-view="front">Front</button>
+                        <button class="control-btn" data-view="top">Top</button>
+                        <button class="control-btn" data-view="side">Side</button>
+                        <button class="control-btn" data-view="iso">Isometric</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flex Spline -->
+        <section id="flex-spline" class="drawing-section">
+            <div class="drawing-header">
+                <h2>Flex Spline</h2>
+                <span class="drawing-number">HD-001</span>
+            </div>
+            <div class="drawing-container">
+                <object data="flex_spline.svg" type="image/svg+xml">
+                    <img src="flex_spline.svg" alt="Flex Spline Drawing">
+                </object>
+            </div>
+            <div class="notes">
+                <h3>Key Specifications</h3>
+                <ul>
+                    <li>Material: 17-4 PH Stainless Steel, H900 condition</li>
+                    <li>200 external teeth, module 0.0157 in (0.4 mm)</li>
+                    <li>Wall thickness: 0.031 in (0.80 mm) +/-0.002 in (CRITICAL)</li>
+                    <li>Outer diameter: 3.175 in (80.64 mm)</li>
+                    <li>Surface treatment: Nitride 0.004-0.008 in (0.1-0.2 mm) case depth</li>
+                    <li>Manufacturing: CNC turning + Wire EDM for teeth</li>
+                </ul>
+            </div>
+            <div class="download-links">
+                <a href="flex_spline.svg" download>Download SVG</a>
+            </div>
+        </section>
+
+        <!-- Circular Spline -->
+        <section id="circular-spline" class="drawing-section">
+            <div class="drawing-header">
+                <h2>Circular Spline</h2>
+                <span class="drawing-number">HD-002</span>
+            </div>
+            <div class="drawing-container">
+                <object data="circular_spline.svg" type="image/svg+xml">
+                    <img src="circular_spline.svg" alt="Circular Spline Drawing">
+                </object>
+            </div>
+            <div class="notes">
+                <h3>Key Specifications</h3>
+                <ul>
+                    <li>Material: Aluminum 7075-T6</li>
+                    <li>202 internal teeth, module 0.0157 in (0.4 mm)</li>
+                    <li>Outer diameter: 3.937 in (100 mm), Ring thickness: 0.394 in (10 mm)</li>
+                    <li>Inner diameter at teeth: 3.156 in (80.16 mm)</li>
+                    <li>6x M4 mounting holes on 3.701 in (94 mm) bolt circle</li>
+                    <li>Surface treatment: Hard anodize Type III</li>
+                </ul>
+            </div>
+            <div class="download-links">
+                <a href="circular_spline.svg" download>Download SVG</a>
+            </div>
+        </section>
+
+        <!-- Wave Generator -->
+        <section id="wave-generator" class="drawing-section">
+            <div class="drawing-header">
+                <h2>Wave Generator</h2>
+                <span class="drawing-number">HD-003</span>
+            </div>
+            <div class="drawing-container">
+                <object data="wave_generator.svg" type="image/svg+xml">
+                    <img src="wave_generator.svg" alt="Wave Generator Drawing">
+                </object>
+            </div>
+            <div class="notes">
+                <h3>Key Specifications</h3>
+                <ul>
+                    <li>Hub Material: Aluminum 6061-T6</li>
+                    <li>Bearing: 6806-2RS 1.181 x 1.654 x 0.276 in (30 x 42 x 7 mm), press fit</li>
+                    <li>Ellipse major axis: 3.183 in (80.84 mm), minor: 3.108 in (78.94 mm)</li>
+                    <li>Radial deflection: 0.035 in (0.9 mm)</li>
+                    <li>Bore: 0.394 in (10 mm) H7 for motor shaft</li>
+                </ul>
+            </div>
+            <div class="download-links">
+                <a href="wave_generator.svg" download>Download SVG</a>
+            </div>
+        </section>
+
+        <!-- Tooth Profile -->
+        <section id="tooth-profile" class="drawing-section">
+            <div class="drawing-header">
+                <h2>Tooth Profile Detail</h2>
+                <span class="drawing-number">HD-004</span>
+            </div>
+            <div class="drawing-container">
+                <object data="tooth_profile.svg" type="image/svg+xml">
+                    <img src="tooth_profile.svg" alt="Tooth Profile Drawing">
+                </object>
+            </div>
+            <div class="notes">
+                <h3>Key Specifications</h3>
+                <ul>
+                    <li>Profile type: Double-arc (S-curve), NOT involute</li>
+                    <li>Pressure angle: 20 deg</li>
+                    <li>Tip radius: R0.0126 in (R0.32 mm), Root radius: R0.0189 in (R0.48 mm)</li>
+                    <li>Flex spline: +0.008 in (+0.2 mm) profile shift (positive)</li>
+                    <li>Circular spline: -0.008 in (-0.2 mm) profile shift (negative)</li>
+                    <li>Tooth height: 0.028 in (0.72 mm)</li>
+                </ul>
+            </div>
+            <div class="download-links">
+                <a href="tooth_profile.svg" download>Download SVG</a>
+            </div>
+        </section>
+
+        <!-- Assembly -->
+        <section id="assembly" class="drawing-section">
+            <div class="drawing-header">
+                <h2>Assembly Drawing</h2>
+                <span class="drawing-number">HD-005</span>
+            </div>
+            <div class="drawing-container">
+                <object data="assembly.svg" type="image/svg+xml">
+                    <img src="assembly.svg" alt="Assembly Drawing">
+                </object>
+            </div>
+            <div class="notes">
+                <h3>Bill of Materials</h3>
+                <ul>
+                    <li>1x Circular Spline (7075-T6 Aluminum)</li>
+                    <li>1x Flex Spline (17-4 PH Stainless)</li>
+                    <li>1x Wave Generator Hub (6061-T6 Aluminum)</li>
+                    <li>1x Bearing 6806-2RS (purchased)</li>
+                    <li>6x M4x10 Socket Head Cap Screws</li>
+                </ul>
+            </div>
+            <div class="download-links">
+                <a href="assembly.svg" download>Download SVG</a>
+                <a href="dimensions_table.txt" download>Dimensions Table</a>
+            </div>
+        </section>
+
+        <!-- Detailed Parts Section -->
+        <section id="detailed-parts" class="drawing-section">
+            <div class="drawing-header">
+                <h2>Detailed Part Drawings</h2>
+                <span class="drawing-number">COMPLETE SET</span>
+            </div>
+
+            <div style="padding: 20px; background: #1a1a2e;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">Complete Assembly Drawing</h3>
+                <p style="color: #aaa; margin-bottom: 15px;">Exploded view, assembled section, top view, and bill of materials</p>
+                <div class="drawing-container" style="border-radius: 8px;">
+                    <object data="parts/complete_assembly.svg" type="image/svg+xml" style="width:100%; min-height:600px;">
+                        <img src="parts/complete_assembly.svg" alt="Complete Assembly">
+                    </object>
+                </div>
+                <div class="download-links" style="padding: 10px 0;">
+                    <a href="parts/complete_assembly.svg" download>Download SVG</a>
+                </div>
+            </div>
+
+            <div style="padding: 20px; background: #16213e;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">Flex Spline - Detailed Drawing (HD-001-A)</h3>
+                <p style="color: #aaa; margin-bottom: 15px;">Section view, top view, tooth profile detail, isometric view</p>
+                <div class="drawing-container" style="border-radius: 8px;">
+                    <object data="parts/flex_spline_detail.svg" type="image/svg+xml" style="width:100%; min-height:600px;">
+                        <img src="parts/flex_spline_detail.svg" alt="Flex Spline Detail">
+                    </object>
+                </div>
+                <div class="download-links" style="padding: 10px 0;">
+                    <a href="parts/flex_spline_detail.svg" download>Download SVG</a>
+                </div>
+            </div>
+
+            <div style="padding: 20px; background: #1a1a2e;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">Circular Spline - Detailed Drawing (HD-002-A)</h3>
+                <p style="color: #aaa; margin-bottom: 15px;">Top view, section view, internal tooth detail, isometric view</p>
+                <div class="drawing-container" style="border-radius: 8px;">
+                    <object data="parts/circular_spline_detail.svg" type="image/svg+xml" style="width:100%; min-height:600px;">
+                        <img src="parts/circular_spline_detail.svg" alt="Circular Spline Detail">
+                    </object>
+                </div>
+                <div class="download-links" style="padding: 10px 0;">
+                    <a href="parts/circular_spline_detail.svg" download>Download SVG</a>
+                </div>
+            </div>
+
+            <div style="padding: 20px; background: #16213e;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">Wave Generator - Detailed Drawing (HD-003-A)</h3>
+                <p style="color: #aaa; margin-bottom: 15px;">Elliptical cam profile, section view, hub detail, bearing specs</p>
+                <div class="drawing-container" style="border-radius: 8px;">
+                    <object data="parts/wave_generator_detail.svg" type="image/svg+xml" style="width:100%; min-height:600px;">
+                        <img src="parts/wave_generator_detail.svg" alt="Wave Generator Detail">
+                    </object>
+                </div>
+                <div class="download-links" style="padding: 10px 0;">
+                    <a href="parts/wave_generator_detail.svg" download>Download SVG</a>
+                </div>
+            </div>
+
+            <div class="notes">
+                <h3>Drawing Set Contents</h3>
+                <ul>
+                    <li>HD-001-A: Flex Spline - Full manufacturing drawing with 4 views</li>
+                    <li>HD-002-A: Circular Spline - Full manufacturing drawing with 4 views</li>
+                    <li>HD-003-A: Wave Generator - Full manufacturing drawing with 4 views</li>
+                    <li>HD-005-A: Complete Assembly - Exploded, section, and top views with BOM</li>
+                    <li>All drawings include dimensions, tolerances, and manufacturing notes</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- DXF Profiles Section -->
+        <section id="dxf-profiles" class="drawing-section">
+            <div class="drawing-header">
+                <h2>CNC/CAM Profiles (from DXF)</h2>
+                <span class="drawing-number">CAM-READY</span>
+            </div>
+
+            <div style="padding: 20px; background: #1a1a2e;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">Flex Spline - External Teeth Profile (200 teeth)</h3>
+                <div class="drawing-container" style="border-radius: 8px;">
+                    <object data="flex_spline_dxf.svg" type="image/svg+xml" style="width:100%; min-height:400px;">
+                        <img src="flex_spline_dxf.svg" alt="Flex Spline DXF Profile">
+                    </object>
+                </div>
+                <div class="download-links" style="padding: 10px 0;">
+                    <a href="flex_spline.dxf" download>Download DXF</a>
+                    <a href="flex_spline_dxf.svg" download>Download SVG</a>
+                </div>
+            </div>
+
+            <div style="padding: 20px; background: #16213e;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">Circular Spline - Internal Teeth Profile (202 teeth)</h3>
+                <div class="drawing-container" style="border-radius: 8px;">
+                    <object data="circular_spline_dxf.svg" type="image/svg+xml" style="width:100%; min-height:400px;">
+                        <img src="circular_spline_dxf.svg" alt="Circular Spline DXF Profile">
+                    </object>
+                </div>
+                <div class="download-links" style="padding: 10px 0;">
+                    <a href="circular_spline.dxf" download>Download DXF</a>
+                    <a href="circular_spline_dxf.svg" download>Download SVG</a>
+                </div>
+            </div>
+
+            <div style="padding: 20px; background: #1a1a2e;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">Wave Generator - Elliptical Cam Profile</h3>
+                <div class="drawing-container" style="border-radius: 8px;">
+                    <object data="wave_generator_dxf.svg" type="image/svg+xml" style="width:100%; min-height:400px;">
+                        <img src="wave_generator_dxf.svg" alt="Wave Generator DXF Profile">
+                    </object>
+                </div>
+                <div class="download-links" style="padding: 10px 0;">
+                    <a href="wave_generator.dxf" download>Download DXF</a>
+                    <a href="wave_generator_dxf.svg" download>Download SVG</a>
+                </div>
+            </div>
+
+            <div class="notes">
+                <h3>DXF Usage Notes</h3>
+                <ul>
+                    <li>DXF files are in millimeters, compatible with AutoCAD R2010+</li>
+                    <li>Tooth profiles are on layer "TEETH", inner circles on "INNER"</li>
+                    <li>Import directly into CAM software (Fusion 360, Mastercam, etc.)</li>
+                    <li>For Wire EDM: Use tooth profile polylines directly</li>
+                    <li>All profiles are 2D top-view suitable for extrusion</li>
+                    <li>Full teeth geometry included: 200 external teeth (flex spline), 202 internal teeth (circular spline)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Downloads Section -->
+        <section id="downloads" class="drawing-section">
+            <div class="drawing-header">
+                <h2>3D CAD Models (SolidWorks Compatible)</h2>
+                <span class="drawing-number">STEP/STL/SCAD</span>
+            </div>
+
+            <div style="padding: 20px; background: #1a1a2e;">
+                <h3 style="color: #f90; margin-bottom: 15px;">Download 3D Models</h3>
+                <p style="color: #aaa; margin-bottom: 20px;">STEP files for SolidWorks, STL for visualization, OpenSCAD for parametric editing. All models include full manufacturing-quality tooth geometry (200/202 teeth with S-curve profiles).</p>
+
+                <div class="grid">
+                    <div class="grid-item">
+                        <h4>Flex Spline</h4>
+                        <p>200 external teeth, cup-shaped, 17-4 PH SS<br>OD: 3.175 in (80.64 mm)</p>
+                        <div class="download-links">
+                            <a href="solidworks/flex_spline.step" download style="background:#e94560;">STEP</a>
+                            <a href="solidworks/flex_spline.stl" download>STL</a>
+                            <a href="solidworks/flex_spline.scad" download>SCAD</a>
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <h4>Circular Spline</h4>
+                        <p>202 internal teeth, ring with bolt holes, 7075-T6<br>ID: 3.156 in (80.16 mm)</p>
+                        <div class="download-links">
+                            <a href="solidworks/circular_spline.step" download style="background:#e94560;">STEP</a>
+                            <a href="solidworks/circular_spline.stl" download>STL</a>
+                            <a href="solidworks/circular_spline.scad" download>SCAD</a>
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <h4>Wave Generator</h4>
+                        <p>Elliptical cam with bearing seat, 6061-T6<br>Major: 3.183 in (80.84 mm)</p>
+                        <div class="download-links">
+                            <a href="solidworks/wave_generator.step" download style="background:#e94560;">STEP</a>
+                            <a href="solidworks/wave_generator.stl" download>STL</a>
+                            <a href="solidworks/wave_generator.scad" download>SCAD</a>
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <h4>Bearing 6806-2RS</h4>
+                        <p>1.181 x 1.654 x 0.276 in (30 x 42 x 7 mm) thin-section bearing</p>
+                        <div class="download-links">
+                            <a href="solidworks/bearing_6806.step" download style="background:#e94560;">STEP</a>
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <h4>Complete Assembly</h4>
+                        <p>All parts assembled for visualization</p>
+                        <div class="download-links">
+                            <a href="solidworks/harmonic_drive_assembly.stl" download>STL</a>
+                            <a href="solidworks/harmonic_drive_assembly.scad" download>SCAD</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes">
+                <h3>SolidWorks Import Instructions</h3>
+                <ul>
+                    <li><strong>STEP Import:</strong> File > Open > Select .step file > Import as Solid Body</li>
+                    <li><strong>STL Import:</strong> File > Open > Select STL > Options: Import as "Solid Body"</li>
+                    <li><strong>After Import:</strong> Run "Import Diagnostics" to heal any geometry issues</li>
+                    <li><strong>Parametric Editing:</strong> Install OpenSCAD, modify .scad files, re-export</li>
+                    <li><strong>Materials:</strong> Assign from SolidWorks library after import</li>
+                </ul>
+            </div>
+
+            <div style="padding: 20px; background: #0f3460;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">OpenSCAD to STEP Conversion</h3>
+                <pre style="background: #1a1a2e; padding: 15px; border-radius: 5px; color: #aaa; overflow-x: auto; font-size: 12px;">
+# Option 1: Using FreeCAD (Free)
+1. Export STL from OpenSCAD (already done)
+2. Open FreeCAD > File > Import > Select STL
+3. Select mesh > Part > Convert to Solid
+4. File > Export > STEP format
+
+# Option 2: Fusion 360 (Free for hobbyists)
+1. Insert > Mesh > Insert Mesh
+2. Mesh > Modify > Convert Mesh
+3. Export as STEP</pre>
+            </div>
+        </section>
+
+        <!-- Specifications Table Section -->
+        <section id="specifications" class="drawing-section">
+            <div class="drawing-header">
+                <h2>Complete Specifications</h2>
+                <span class="drawing-number">DIMS</span>
+            </div>
+
+            <div style="padding: 20px;">
+                <h3 style="color: #e94560; margin-bottom: 15px;">Flex Spline Dimensions</h3>
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Inches</th>
+                            <th>(mm)</th>
+                            <th>Tolerance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Outer Diameter (at teeth)</td><td>3.175</td><td>(80.64)</td><td>+/-0.0008</td></tr>
+                        <tr><td>Inner Diameter</td><td>3.112</td><td>(79.04)</td><td>+/-0.0008</td></tr>
+                        <tr><td>Pitch Diameter</td><td>3.150</td><td>(80.00)</td><td>REF</td></tr>
+                        <tr><td>Wall Thickness</td><td>0.031</td><td>(0.80)</td><td>+/-0.002 CRITICAL</td></tr>
+                        <tr><td>Cup Depth</td><td>0.945</td><td>(24.0)</td><td>+/-0.004</td></tr>
+                        <tr><td>Base Thickness</td><td>0.094</td><td>(2.4)</td><td>+/-0.004</td></tr>
+                        <tr><td>Fillet Radius (base)</td><td>0.079</td><td>(2.0)</td><td>MIN</td></tr>
+                        <tr><td>Tooth Zone Width</td><td>0.378</td><td>(9.6)</td><td>+/-0.004</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color: #e94560; margin: 30px 0 15px;">Circular Spline Dimensions</h3>
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Inches</th>
+                            <th>(mm)</th>
+                            <th>Tolerance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Outer Diameter</td><td>3.937</td><td>(100.0)</td><td>+/-0.002</td></tr>
+                        <tr><td>Inner Diameter (at teeth)</td><td>3.156</td><td>(80.16)</td><td>+/-0.0008</td></tr>
+                        <tr><td>Pitch Diameter</td><td>3.181</td><td>(80.80)</td><td>REF</td></tr>
+                        <tr><td>Ring Thickness</td><td>0.394</td><td>(10.0)</td><td>+/-0.004</td></tr>
+                        <tr><td>Ring Height</td><td>0.535</td><td>(13.6)</td><td>+/-0.004</td></tr>
+                        <tr><td>Bolt Circle Diameter</td><td>3.701</td><td>(94.0)</td><td>+/-0.004</td></tr>
+                        <tr><td>Bolt Hole Diameter</td><td>0.165</td><td>(4.2)</td><td>M4 clearance</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color: #e94560; margin: 30px 0 15px;">Wave Generator Dimensions</h3>
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Inches</th>
+                            <th>(mm)</th>
+                            <th>Tolerance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Major Axis</td><td>3.183</td><td>(80.84)</td><td>+/-0.0008</td></tr>
+                        <tr><td>Minor Axis</td><td>3.108</td><td>(78.94)</td><td>+/-0.0008</td></tr>
+                        <tr><td>Cam Width</td><td>0.378</td><td>(9.6)</td><td>+/-0.004</td></tr>
+                        <tr><td>Hub OD</td><td>1.181</td><td>(29.98)</td><td>H7</td></tr>
+                        <tr><td>Hub Bore</td><td>0.394</td><td>(10.0)</td><td>H7</td></tr>
+                        <tr><td>Bearing OD</td><td>1.654</td><td>(42.0)</td><td>REF</td></tr>
+                        <tr><td>Bearing ID</td><td>1.181</td><td>(30.0)</td><td>REF</td></tr>
+                        <tr><td>Bearing Width</td><td>0.276</td><td>(7.0)</td><td>REF</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color: #e94560; margin: 30px 0 15px;">Tooth Parameters</h3>
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Inches</th>
+                            <th>(mm)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Module</td><td>0.0157</td><td>(0.4)</td><td>-</td></tr>
+                        <tr><td>Addendum</td><td>0.0126</td><td>(0.32)</td><td>0.8 x Module</td></tr>
+                        <tr><td>Dedendum</td><td>0.0157</td><td>(0.40)</td><td>1.0 x Module</td></tr>
+                        <tr><td>Tooth Height</td><td>0.0283</td><td>(0.72)</td><td>Add + Ded</td></tr>
+                        <tr><td>Pressure Angle</td><td colspan="2">20 deg</td><td>-</td></tr>
+                        <tr><td>Tip Radius</td><td>0.0126</td><td>(0.32)</td><td>0.8 x Module</td></tr>
+                        <tr><td>Root Radius</td><td>0.0189</td><td>(0.48)</td><td>1.2 x Module</td></tr>
+                        <tr><td>Flex Spline Teeth</td><td colspan="2">200</td><td>External</td></tr>
+                        <tr><td>Circular Spline Teeth</td><td colspan="2">202</td><td>Internal</td></tr>
+                        <tr><td>Profile Shift (Flex)</td><td>+0.008</td><td>(+0.2)</td><td>Positive</td></tr>
+                        <tr><td>Profile Shift (Circ)</td><td>-0.008</td><td>(-0.2)</td><td>Negative</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Harmonic Drive Design Documentation</p>
+        <p>Generated for CNC Machining Service</p>
+    </footer>
+
+    <!-- Three.js Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+
+    <script>
+        // Scene setup
+        let scene, camera, renderer, controls, currentMesh;
+        let isWireframe = false;
+        let autoRotate = false;
+
+        const partInfo = {
+            assembly: {
+                name: 'Complete Assembly',
+                file: 'solidworks/harmonic_drive_assembly.stl',
+                color: 0xc0c0c0,
+                specs: [
+                    ['Gear Ratio', '100:1'],
+                    ['Output Torque', '40 Nm'],
+                    ['Outer Diameter', '3.937 in (100 mm)'],
+                    ['Module', '0.0157 in (0.4 mm)']
+                ]
+            },
+            flex_spline: {
+                name: 'Flex Spline',
+                file: 'solidworks/flex_spline.stl',
+                color: 0xa0a0ff,
+                specs: [
+                    ['Number of Teeth', '200'],
+                    ['Outer Diameter', '3.175 in (80.64 mm)'],
+                    ['Wall Thickness', '0.031 in (0.8 mm)'],
+                    ['Cup Depth', '0.945 in (24.0 mm)'],
+                    ['Material', '17-4 PH SS']
+                ]
+            },
+            circular_spline: {
+                name: 'Circular Spline',
+                file: 'solidworks/circular_spline.stl',
+                color: 0xffa0a0,
+                specs: [
+                    ['Number of Teeth', '202'],
+                    ['Inner Diameter', '3.156 in (80.16 mm)'],
+                    ['Outer Diameter', '3.937 in (100 mm)'],
+                    ['Height', '0.535 in (13.6 mm)'],
+                    ['Material', '7075-T6 Aluminum']
+                ]
+            },
+            wave_generator: {
+                name: 'Wave Generator',
+                file: 'solidworks/wave_generator.stl',
+                color: 0xa0ffa0,
+                specs: [
+                    ['Major Axis', '3.183 in (80.84 mm)'],
+                    ['Minor Axis', '3.108 in (78.94 mm)'],
+                    ['Width', '0.378 in (9.6 mm)'],
+                    ['Bearing', '6806-2RS'],
+                    ['Material', '6061-T6 Aluminum']
+                ]
+            }
+        };
+
+        const colors = [
+            { hex: 0xc0c0c0, css: '#c0c0c0' },
+            { hex: 0x4a9eff, css: '#4a9eff' },
+            { hex: 0xff6b6b, css: '#ff6b6b' },
+            { hex: 0x51cf66, css: '#51cf66' },
+            { hex: 0xffd43b, css: '#ffd43b' }
+        ];
+
+        function init() {
+            const container = document.getElementById('viewer');
+            if (!container) return;
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0d0d1a);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(100, 100, 100);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+            scene.add(ambientLight);
+
+            const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight1.position.set(1, 1, 1);
+            scene.add(directionalLight1);
+
+            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4);
+            directionalLight2.position.set(-1, -1, -1);
+            scene.add(directionalLight2);
+
+            // Grid
+            const gridHelper = new THREE.GridHelper(200, 20, 0x444444, 0x222222);
+            scene.add(gridHelper);
+
+            // Axes helper
+            const axesHelper = new THREE.AxesHelper(50);
+            scene.add(axesHelper);
+
+            // Setup color picker
+            setupColorPicker();
+
+            // Load initial model
+            loadModel('assembly');
+
+            // Handle resize
+            window.addEventListener('resize', onWindowResize);
+
+            // Part buttons
+            document.querySelectorAll('.part-btn[data-part]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.part-btn[data-part]').forEach(function(b) {
+                        b.classList.remove('active');
+                    });
+                    btn.classList.add('active');
+                    loadModel(btn.dataset.part);
+                });
+            });
+
+            // View buttons
+            document.querySelectorAll('.control-btn[data-view]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    setView(btn.dataset.view);
+                });
+            });
+
+            // Control buttons
+            document.getElementById('btn-wireframe').addEventListener('click', toggleWireframe);
+            document.getElementById('btn-reset').addEventListener('click', resetCamera);
+            document.getElementById('btn-rotate').addEventListener('click', toggleAutoRotate);
+
+            animate();
+        }
+
+        function setupColorPicker() {
+            const container = document.getElementById('color-options');
+            if (!container) return;
+            colors.forEach(function(color, index) {
+                const div = document.createElement('div');
+                div.className = 'color-opt' + (index === 0 ? ' active' : '');
+                div.style.background = color.css;
+                div.dataset.color = color.hex;
+                div.addEventListener('click', function() {
+                    document.querySelectorAll('.color-opt').forEach(function(o) {
+                        o.classList.remove('active');
+                    });
+                    div.classList.add('active');
+                    if (currentMesh) {
+                        currentMesh.material.color.setHex(color.hex);
+                    }
+                });
+                container.appendChild(div);
+            });
+        }
+
+        function updateSpecsTable(specs) {
+            const tbody = document.getElementById('specs-body');
+            if (!tbody) return;
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+            specs.forEach(function(spec) {
+                const tr = document.createElement('tr');
+                const td1 = document.createElement('td');
+                td1.textContent = spec[0];
+                const td2 = document.createElement('td');
+                td2.textContent = spec[1];
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tbody.appendChild(tr);
+            });
+        }
+
+        function loadModel(partKey) {
+            const part = partInfo[partKey];
+            const loadingEl = document.getElementById('loading');
+            if (loadingEl) loadingEl.style.display = 'block';
+
+            // Update info panel
+            const partNameEl = document.getElementById('part-name');
+            if (partNameEl) partNameEl.textContent = part.name;
+            updateSpecsTable(part.specs);
+
+            // Remove existing mesh
+            if (currentMesh) {
+                scene.remove(currentMesh);
+                currentMesh.geometry.dispose();
+                currentMesh.material.dispose();
+            }
+
+            // Load STL
+            const loader = new THREE.STLLoader();
+            loader.load(part.file, function(geometry) {
+                geometry.computeVertexNormals();
+                geometry.center();
+
+                const material = new THREE.MeshPhongMaterial({
+                    color: part.color,
+                    specular: 0x444444,
+                    shininess: 30,
+                    wireframe: isWireframe
+                });
+
+                currentMesh = new THREE.Mesh(geometry, material);
+
+                // Scale to fit view
+                const box = new THREE.Box3().setFromObject(currentMesh);
+                const size = box.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 80 / maxDim;
+                currentMesh.scale.set(scale, scale, scale);
+
+                scene.add(currentMesh);
+                if (loadingEl) loadingEl.style.display = 'none';
+
+                // Reset active color
+                document.querySelectorAll('.color-opt').forEach(function(o) {
+                    o.classList.remove('active');
+                });
+                const firstColorOpt = document.querySelector('.color-opt');
+                if (firstColorOpt) firstColorOpt.classList.add('active');
+
+            }, undefined, function(error) {
+                console.error('Error loading model:', error);
+                if (loadingEl) loadingEl.style.display = 'none';
+            });
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('viewer');
+            if (!container || !camera || !renderer) return;
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (controls) controls.update();
+            if (autoRotate && currentMesh) {
+                currentMesh.rotation.z += 0.005;
+            }
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
+        }
+
+        function setView(view) {
+            const distance = 150;
+            switch(view) {
+                case 'front':
+                    camera.position.set(0, 0, distance);
+                    break;
+                case 'top':
+                    camera.position.set(0, distance, 0);
+                    break;
+                case 'side':
+                    camera.position.set(distance, 0, 0);
+                    break;
+                case 'iso':
+                    camera.position.set(distance * 0.7, distance * 0.7, distance * 0.7);
+                    break;
+            }
+            camera.lookAt(0, 0, 0);
+            if (controls) controls.update();
+        }
+
+        function toggleWireframe() {
+            isWireframe = !isWireframe;
+            if (currentMesh) {
+                currentMesh.material.wireframe = isWireframe;
+            }
+        }
+
+        function resetCamera() {
+            camera.position.set(100, 100, 100);
+            camera.lookAt(0, 0, 0);
+            if (controls) controls.reset();
+        }
+
+        function toggleAutoRotate() {
+            autoRotate = !autoRotate;
+        }
+
+        // Highlight active nav item on scroll
+        const sections = document.querySelectorAll('.drawing-section, .viewer-section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', function() {
+            let current = '';
+            sections.forEach(function(section) {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize 3D viewer
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
