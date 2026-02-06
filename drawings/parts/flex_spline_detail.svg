@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <style>
+    .outline { fill: none; stroke: #000; stroke-width: 0.5; }
+    .thick { fill: none; stroke: #000; stroke-width: 1; }
+    .thin { fill: none; stroke: #000; stroke-width: 0.3; }
+    .dim { fill: none; stroke: #000; stroke-width: 0.25; }
+    .dim-text { font-family: Arial, sans-serif; font-size: 9px; fill: #000; }
+    .title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 12px; fill: #000; }
+    .note { font-family: Arial, sans-serif; font-size: 8px; fill: #000; }
+    .center { fill: none; stroke: #000; stroke-width: 0.25; stroke-dasharray: 12,3,2,3; }
+    .hidden { fill: none; stroke: #000; stroke-width: 0.3; stroke-dasharray: 5,2; }
+    .hatch { fill: none; stroke: #444; stroke-width: 0.15; }
+    .section-fill { fill: #e8e8ff; stroke: #000; stroke-width: 0.5; }
+    .detail-box { fill: none; stroke: #c00; stroke-width: 0.5; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#fff"/>
+
+  <!-- Border -->
+  <rect x="10" y="10" width="1180" height="880" fill="none" stroke="#000" stroke-width="1"/>
+
+  <!-- Title Block -->
+  <rect x="850" y="800" width="340" height="90" class="thick"/>
+  <line x1="850" y1="830" x2="1190" y2="830" class="outline"/>
+  <line x1="850" y1="855" x2="1190" y2="855" class="outline"/>
+  <line x1="850" y1="870" x2="1190" y2="870" class="outline"/>
+  <line x1="1000" y1="800" x2="1000" y2="870" class="outline"/>
+  <text x="860" y="820" class="subtitle">PART NAME:</text>
+  <text x="1010" y="820" class="title">FLEX SPLINE</text>
+  <text x="860" y="845" class="note">MATERIAL: 17-4 PH STAINLESS (H900)</text>
+  <text x="1010" y="845" class="note">TREATMENT: NITRIDE 0.004-0.008 in</text>
+  <text x="860" y="865" class="note">SCALE: AS SHOWN</text>
+  <text x="1010" y="865" class="note">DWG NO: HD-001-A</text>
+  <text x="860" y="885" class="note">UNITS: inches (mm)</text>
+  <text x="1010" y="885" class="note">SHEET 1 OF 1</text>
+
+  <!-- VIEW 1: Front Section View (Large) -->
+  <text x="150" y="45" class="title">SECTION A-A</text>
+  <text x="150" y="62" class="subtitle">SCALE 2:1</text>
+
+  <g transform="translate(200, 350)">
+    <!-- Center line -->
+    <line x1="0" y1="-280" x2="0" y2="100" class="center"/>
+
+    <!-- Cup outer profile - left side -->
+    <path d="M -80 -240
+             L -80 40
+             Q -80 70, -50 70
+             L 50 70
+             Q 80 70, 80 40
+             L 80 -240" class="section-fill"/>
+
+    <!-- Cup inner profile -->
+    <path d="M -72 -240
+             L -72 32
+             Q -72 58, -45 58
+             L 45 58
+             Q 72 58, 72 32
+             L 72 -240" fill="#fff" stroke="#000" stroke-width="0.5"/>
+
+    <!-- Tooth zone shading -->
+    <rect x="-84" y="-240" width="8" height="96" fill="#c8c8ff" stroke="#000" stroke-width="0.3"/>
+    <rect x="76" y="-240" width="8" height="96" fill="#c8c8ff" stroke="#000" stroke-width="0.3"/>
+
+    <!-- Cross hatching for section -->
+    <g class="hatch">
+      <!-- Left wall hatching -->
+      <line x1="-80" y1="-230" x2="-72" y2="-238"/>
+      <line x1="-80" y1="-210" x2="-72" y2="-218"/>
+      <line x1="-80" y1="-190" x2="-72" y2="-198"/>
+      <line x1="-80" y1="-170" x2="-72" y2="-178"/>
+      <line x1="-80" y1="-150" x2="-72" y2="-158"/>
+      <line x1="-80" y1="-100" x2="-72" y2="-108"/>
+      <line x1="-80" y1="-80" x2="-72" y2="-88"/>
+      <line x1="-80" y1="-60" x2="-72" y2="-68"/>
+      <line x1="-80" y1="-40" x2="-72" y2="-48"/>
+      <line x1="-80" y1="-20" x2="-72" y2="-28"/>
+      <line x1="-80" y1="0" x2="-72" y2="-8"/>
+      <line x1="-80" y1="20" x2="-72" y2="12"/>
+      <line x1="-80" y1="40" x2="-72" y2="32"/>
+      <!-- Right wall hatching -->
+      <line x1="72" y1="-230" x2="80" y2="-238"/>
+      <line x1="72" y1="-210" x2="80" y2="-218"/>
+      <line x1="72" y1="-190" x2="80" y2="-198"/>
+      <line x1="72" y1="-170" x2="80" y2="-178"/>
+      <line x1="72" y1="-150" x2="80" y2="-158"/>
+      <line x1="72" y1="-100" x2="80" y2="-108"/>
+      <line x1="72" y1="-80" x2="80" y2="-88"/>
+      <line x1="72" y1="-60" x2="80" y2="-68"/>
+      <line x1="72" y1="-40" x2="80" y2="-48"/>
+      <line x1="72" y1="-20" x2="80" y2="-28"/>
+      <line x1="72" y1="0" x2="80" y2="-8"/>
+      <line x1="72" y1="20" x2="80" y2="12"/>
+      <line x1="72" y1="40" x2="80" y2="32"/>
+      <!-- Base hatching -->
+      <line x1="-45" y1="58" x2="-37" y2="70"/>
+      <line x1="-25" y1="58" x2="-17" y2="70"/>
+      <line x1="-5" y1="58" x2="3" y2="70"/>
+      <line x1="15" y1="58" x2="23" y2="70"/>
+      <line x1="35" y1="58" x2="43" y2="70"/>
+    </g>
+
+    <!-- Dimensions -->
+    <!-- Outer diameter -->
+    <line x1="-80" y1="-260" x2="-80" y2="-280" class="dim"/>
+    <line x1="80" y1="-260" x2="80" y2="-280" class="dim"/>
+    <line x1="-80" y1="-270" x2="80" y2="-270" class="dim"/>
+    <polygon points="-80,-270 -73,-267 -73,-273" fill="#000"/>
+    <polygon points="80,-270 73,-267 73,-273" fill="#000"/>
+    <text x="-30" y="-275" class="dim-text">Ø3.175 in (80.64)</text>
+
+    <!-- Inner diameter -->
+    <line x1="-72" y1="-70" x2="-100" y2="-70" class="dim"/>
+    <line x1="72" y1="-70" x2="100" y2="-70" class="dim"/>
+    <text x="-140" y="-65" class="dim-text">Ø3.112 in</text>
+    <text x="-140" y="-55" class="dim-text">(79.04)</text>
+
+    <!-- Wall thickness -->
+    <line x1="-80" y1="0" x2="-100" y2="0" class="dim"/>
+    <line x1="-72" y1="0" x2="-100" y2="0" class="dim"/>
+    <line x1="-95" y1="-5" x2="-95" y2="5" class="dim"/>
+    <text x="-145" y="5" class="dim-text">0.031 in (0.80)</text>
+
+    <!-- Cup depth -->
+    <line x1="95" y1="-240" x2="120" y2="-240" class="dim"/>
+    <line x1="95" y1="70" x2="120" y2="70" class="dim"/>
+    <line x1="110" y1="-240" x2="110" y2="70" class="dim"/>
+    <polygon points="110,-240 107,-233 113,-233" fill="#000"/>
+    <polygon points="110,70 107,63 113,63" fill="#000"/>
+    <text x="115" y="-80" class="dim-text">0.945 in</text>
+    <text x="115" y="-68" class="dim-text">(24.0)</text>
+
+    <!-- Tooth zone -->
+    <line x1="130" y1="-240" x2="150" y2="-240" class="dim"/>
+    <line x1="130" y1="-144" x2="150" y2="-144" class="dim"/>
+    <line x1="140" y1="-240" x2="140" y2="-144" class="dim"/>
+    <polygon points="140,-240 137,-233 143,-233" fill="#000"/>
+    <polygon points="140,-144 137,-137 143,-137" fill="#000"/>
+    <text x="145" y="-188" class="dim-text">0.378 in (9.6)</text>
+
+    <!-- Base thickness -->
+    <line x1="0" y1="58" x2="0" y2="85" class="dim"/>
+    <line x1="0" y1="70" x2="50" y2="85" class="dim"/>
+    <text x="55" y="88" class="dim-text">0.094 in (2.4)</text>
+
+    <!-- Fillet radius -->
+    <path d="M -72 35 Q -72 58 -50 58" class="dim" fill="none"/>
+    <text x="-65" y="48" class="dim-text">R0.079 in</text>
+
+    <!-- Section line indicators -->
+    <text x="-95" y="-240" class="subtitle">A</text>
+    <text x="90" y="-240" class="subtitle">A</text>
+  </g>
+
+  <!-- VIEW 2: Top View -->
+  <text x="550" y="45" class="title">TOP VIEW</text>
+  <text x="550" y="62" class="subtitle">SCALE 1:1</text>
+
+  <g transform="translate(620, 200)">
+    <!-- Center lines -->
+    <line x1="-120" y1="0" x2="120" y2="0" class="center"/>
+    <line x1="0" y1="-120" x2="0" y2="120" class="center"/>
+
+    <!-- Outer circle (tooth tips) -->
+    <circle cx="0" cy="0" r="100" class="thick"/>
+
+    <!-- Pitch circle -->
+    <circle cx="0" cy="0" r="100" class="center"/>
+
+    <!-- Root circle indication -->
+    <circle cx="0" cy="0" r="96" class="thin"/>
+
+    <!-- Tooth indication marks -->
+    <g stroke="#000" stroke-width="0.3">
+      <line x1="0" y1="-100" x2="0" y2="-96"/>
+      <line x1="15.6" y1="-98.8" x2="15" y2="-94.9"/>
+      <line x1="30.9" y1="-95.1" x2="29.7" y2="-91.3"/>
+      <line x1="45.4" y1="-89.1" x2="43.6" y2="-85.5"/>
+      <line x1="58.8" y1="-80.9" x2="56.5" y2="-77.7"/>
+      <line x1="70.7" y1="-70.7" x2="67.9" y2="-67.9"/>
+      <line x1="80.9" y1="-58.8" x2="77.7" y2="-56.5"/>
+      <line x1="89.1" y1="-45.4" x2="85.5" y2="-43.6"/>
+      <line x1="95.1" y1="-30.9" x2="91.3" y2="-29.7"/>
+      <line x1="98.8" y1="-15.6" x2="94.9" y2="-15"/>
+      <line x1="100" y1="0" x2="96" y2="0"/>
+      <line x1="98.8" y1="15.6" x2="94.9" y2="15"/>
+      <line x1="95.1" y1="30.9" x2="91.3" y2="29.7"/>
+    </g>
+
+    <!-- Dimension - OD -->
+    <line x1="0" y1="110" x2="0" y2="130" class="dim"/>
+    <line x1="-100" y1="100" x2="-100" y2="130" class="dim"/>
+    <line x1="100" y1="100" x2="100" y2="130" class="dim"/>
+    <line x1="-100" y1="125" x2="100" y2="125" class="dim"/>
+    <polygon points="-100,125 -93,122 -93,128" fill="#000"/>
+    <polygon points="100,125 93,122 93,128" fill="#000"/>
+    <text x="-30" y="140" class="dim-text">Ø3.175 in (80.64)</text>
+
+    <!-- Notes -->
+    <text x="-40" y="-60" class="note">200 TEETH</text>
+    <text x="-55" y="-48" class="note">MOD 0.0157 in (0.4)</text>
+    <text x="-65" y="-36" class="note">PITCH Ø3.150 in (80)</text>
+  </g>
+
+  <!-- VIEW 3: Detail B - Tooth Profile -->
+  <text x="900" y="45" class="title">DETAIL B - TOOTH</text>
+  <text x="900" y="62" class="subtitle">SCALE 25:1</text>
+
+  <!-- Detail callout on top view -->
+  <rect x="695" y="88" width="50" height="30" class="detail-box"/>
+  <text x="750" y="105" class="note" fill="#c00">B</text>
+
+  <g transform="translate(980, 220)">
+    <!-- Reference lines -->
+    <line x1="-80" y1="0" x2="80" y2="0" class="center"/>
+    <text x="85" y="4" class="note">PITCH LINE</text>
+
+    <!-- Addendum line -->
+    <line x1="-80" y1="-32" x2="80" y2="-32" class="thin" stroke-dasharray="2,2"/>
+    <text x="85" y="-28" class="note">ADDENDUM</text>
+
+    <!-- Dedendum line -->
+    <line x1="-80" y1="40" x2="80" y2="40" class="thin" stroke-dasharray="2,2"/>
+    <text x="85" y="44" class="note">DEDENDUM</text>
+
+    <!-- Tooth profile -->
+    <path d="M -31.4 40
+             Q -31.4 25, -25 10
+             Q -18 -8, -10 -22
+             Q -5 -30, 0 -32
+             Q 5 -30, 10 -22
+             Q 18 -8, 25 10
+             Q 31.4 25, 31.4 40" class="thick" fill="#e8e8ff"/>
+
+    <!-- Dimensions -->
+    <line x1="0" y1="-32" x2="0" y2="-55" class="dim"/>
+    <line x1="0" y1="40" x2="0" y2="60" class="dim"/>
+    <line x1="-45" y1="-32" x2="-45" y2="40" class="dim"/>
+    <polygon points="-45,-32 -42,-25 -48,-25" fill="#000"/>
+    <polygon points="-45,40 -42,33 -48,33" fill="#000"/>
+    <text x="-75" y="8" class="dim-text">0.028 in (0.72)</text>
+
+    <line x1="-31.4" y1="50" x2="31.4" y2="50" class="dim"/>
+    <polygon points="-31.4,50 -24.4,47 -24.4,53" fill="#000"/>
+    <polygon points="31.4,50 24.4,47 24.4,53" fill="#000"/>
+    <text x="-20" y="65" class="dim-text">0.049 in (1.257)</text>
+
+    <!-- Tip radius -->
+    <circle cx="0" cy="-32" r="8" fill="none" stroke="#c00" stroke-width="0.3"/>
+    <text x="10" y="-40" class="note" fill="#c00">R0.013 in</text>
+
+    <!-- Root radius -->
+    <circle cx="-31.4" cy="40" r="12" fill="none" stroke="#c00" stroke-width="0.3"/>
+    <text x="-55" y="55" class="note" fill="#c00">R0.019 in</text>
+
+    <!-- Pressure angle -->
+    <line x1="0" y1="0" x2="20" y2="-55" class="dim"/>
+    <path d="M 0 -20 A 20 20 0 0 1 7.3 -18.6" class="dim"/>
+    <text x="12" y="-12" class="dim-text">20°</text>
+  </g>
+
+  <!-- VIEW 4: 3D Isometric Representation -->
+  <text x="550" y="400" class="title">ISOMETRIC VIEW</text>
+  <text x="550" y="417" class="subtitle">FOR REFERENCE ONLY</text>
+
+  <g transform="translate(620, 620)">
+    <!-- Simple isometric cup shape -->
+    <!-- Top ellipse (open end) -->
+    <ellipse cx="0" cy="-120" rx="100" ry="35" fill="none" class="thick"/>
+
+    <!-- Bottom ellipse (base) -->
+    <ellipse cx="0" cy="60" rx="65" ry="23" fill="#e8e8ff" class="thick"/>
+
+    <!-- Left side -->
+    <path d="M -100 -120
+             C -100 -60, -85 20, -65 60" class="thick" fill="none"/>
+
+    <!-- Right side -->
+    <path d="M 100 -120
+             C 100 -60, 85 20, 65 60" class="thick" fill="none"/>
+
+    <!-- Inner top ellipse -->
+    <ellipse cx="0" cy="-120" rx="92" ry="32" fill="none" class="thin"/>
+
+    <!-- Tooth texture indication -->
+    <g stroke="#888" stroke-width="0.3">
+      <ellipse cx="0" cy="-105" rx="96" ry="34" fill="none" stroke-dasharray="2,3"/>
+      <ellipse cx="0" cy="-90" rx="92" ry="32" fill="none" stroke-dasharray="2,3"/>
+    </g>
+
+    <!-- Labels -->
+    <line x1="105" y1="-120" x2="140" y2="-140" class="thin"/>
+    <text x="145" y="-138" class="note">TEETH ZONE</text>
+
+    <line x1="70" y1="60" x2="100" y2="80" class="thin"/>
+    <text x="105" y="83" class="note">CLOSED BASE</text>
+
+    <line x1="-70" y1="-50" x2="-100" y2="-70" class="thin"/>
+    <text x="-160" y="-68" class="note">THIN WALL</text>
+    <text x="-160" y="-58" class="note">(FLEXIBLE)</text>
+  </g>
+
+  <!-- Notes Section -->
+  <rect x="30" y="680" width="400" height="180" class="outline"/>
+  <text x="40" y="700" class="subtitle">MANUFACTURING NOTES:</text>
+  <text x="40" y="720" class="note">1. TURN CUP FROM BAR STOCK, LEAVE 0.020 in FOR FINISH</text>
+  <text x="40" y="735" class="note">2. HEAT TREAT TO H900 CONDITION BEFORE FINAL MACHINING</text>
+  <text x="40" y="750" class="note">3. FINISH TURN TO FINAL DIMENSIONS</text>
+  <text x="40" y="765" class="note">4. WIRE EDM EXTERNAL TEETH (S-CURVE PROFILE)</text>
+  <text x="40" y="780" class="note">5. NITRIDE SURFACE 0.004-0.008 in CASE DEPTH</text>
+  <text x="40" y="795" class="note">6. SURFACE FINISH: Ra 0.8 ON TEETH, Ra 1.6 ELSEWHERE</text>
+  <text x="40" y="810" class="note">7. WALL THICKNESS IS CRITICAL - CHECK AT 8 POINTS (45° APART)</text>
+  <text x="40" y="825" class="note">8. FILLET AT BASE MUST BE SMOOTH - NO TOOL MARKS</text>
+  <text x="40" y="840" class="note">9. CONCENTRICITY OF TEETH TO BORE: &lt;0.0008 in TIR</text>
+
+  <!-- Specifications Table -->
+  <rect x="450" y="680" width="380" height="100" class="outline"/>
+  <text x="460" y="700" class="subtitle">SPECIFICATIONS:</text>
+  <line x1="450" y1="710" x2="830" y2="710" class="thin"/>
+  <line x1="600" y1="680" x2="600" y2="780" class="thin"/>
+  <line x1="720" y1="680" x2="720" y2="780" class="thin"/>
+
+  <text x="460" y="725" class="note">Parameter</text>
+  <text x="610" y="725" class="note">Value</text>
+  <text x="730" y="725" class="note">Tolerance</text>
+
+  <text x="460" y="742" class="note">Number of Teeth</text>
+  <text x="610" y="742" class="note">200</text>
+  <text x="730" y="742" class="note">-</text>
+
+  <text x="460" y="757" class="note">Module</text>
+  <text x="610" y="757" class="note">0.0157 in (0.4)</text>
+  <text x="730" y="757" class="note">-</text>
+
+  <text x="460" y="772" class="note">Pitch Diameter</text>
+  <text x="610" y="772" class="note">3.150 in (80.0)</text>
+  <text x="730" y="772" class="note">REF</text>
+</svg>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <style>
+    .outline { fill: none; stroke: #000; stroke-width: 0.5; }
+    .thick { fill: none; stroke: #000; stroke-width: 1; }
+    .dim { fill: none; stroke: #000; stroke-width: 0.3; }
+    .dim-text { font-family: Arial, sans-serif; font-size: 10px; fill: #000; }
+    .title { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #000; }
+    .note { font-family: Arial, sans-serif; font-size: 9px; fill: #000; }
+    .center { fill: none; stroke: #000; stroke-width: 0.3; stroke-dasharray: 10,3,2,3; }
+    .construction { fill: none; stroke: #00f; stroke-width: 0.3; stroke-dasharray: 2,2; }
+    .flex { fill: none; stroke: #000; stroke-width: 0.8; }
+    .circ { fill: none; stroke: #c00; stroke-width: 0.8; }
+  </style>
+
+  <!-- Title Block -->
+  <rect x="550" y="520" width="240" height="70" class="thick"/>
+  <line x1="550" y1="545" x2="790" y2="545" class="outline"/>
+  <line x1="550" y1="565" x2="790" y2="565" class="outline"/>
+  <line x1="650" y1="520" x2="650" y2="590" class="outline"/>
+  <text x="560" y="535" class="note">DETAIL:</text>
+  <text x="660" y="535" class="title">TOOTH PROFILE</text>
+  <text x="560" y="558" class="note">TYPE:</text>
+  <text x="660" y="558" class="note">DOUBLE-ARC (S-CURVE)</text>
+  <text x="560" y="580" class="note">SCALE: 25:1</text>
+  <text x="660" y="580" class="note">DWG: HD-004 REV A</text>
+
+  <!-- Flex Spline Tooth Detail -->
+  <text x="100" y="30" class="title">FLEX SPLINE TOOTH (EXTERNAL)</text>
+  <text x="100" y="45" class="note">SCALE 25:1</text>
+
+  <!-- Reference circles -->
+  <g transform="translate(200, 200)">
+    <!-- Pitch line -->
+    <line x1="-80" y1="0" x2="80" y2="0" class="center"/>
+    <text x="85" y="4" class="note">PITCH LINE</text>
+
+    <!-- Addendum line -->
+    <line x1="-80" y1="-32" x2="80" y2="-32" class="construction"/>
+    <text x="85" y="-28" class="note" fill="#00f">ADDENDUM (0.32)</text>
+
+    <!-- Dedendum line -->
+    <line x1="-80" y1="40" x2="80" y2="40" class="construction"/>
+    <text x="85" y="44" class="note" fill="#00f">DEDENDUM (0.40)</text>
+
+    <!-- Single tooth profile - S-curve -->
+    <path d="M -31.4 40
+             Q -31.4 30, -28 20
+             Q -24 8, -20 0
+             Q -16 -12, -12 -22
+             Q -8 -28, 0 -32
+             Q 8 -28, 12 -22
+             Q 16 -12, 20 0
+             Q 24 8, 28 20
+             Q 31.4 30, 31.4 40" class="flex"/>
+
+    <!-- Tooth tip arc -->
+    <circle cx="0" cy="-32" r="8" class="construction"/>
+    <text x="12" y="-35" class="dim-text" fill="#00f">R0.32</text>
+
+    <!-- Tooth root arc (left) -->
+    <circle cx="-31.4" cy="40" r="12" class="construction"/>
+    <text x="-55" y="55" class="dim-text" fill="#00f">R0.48</text>
+
+    <!-- Tooth root arc (right) -->
+    <circle cx="31.4" cy="40" r="12" class="construction"/>
+
+    <!-- Pressure angle lines -->
+    <line x1="0" y1="0" x2="-18.8" y2="-51.6" class="dim"/>
+    <line x1="0" y1="0" x2="18.8" y2="-51.6" class="dim"/>
+
+    <!-- Pressure angle arc -->
+    <path d="M 0 -25 A 25 25 0 0 1 8.5 -23.5" class="dim"/>
+    <text x="12" y="-15" class="dim-text">20°</text>
+
+    <!-- Dimensions -->
+    <!-- Tooth width at pitch -->
+    <line x1="-15.7" y1="0" x2="-15.7" y2="60" class="dim"/>
+    <line x1="15.7" y1="0" x2="15.7" y2="60" class="dim"/>
+    <line x1="-15.7" y1="55" x2="15.7" y2="55" class="dim"/>
+    <polygon points="-15.7,55 -8.7,52 -8.7,58" fill="#000"/>
+    <polygon points="15.7,55 8.7,52 8.7,58" fill="#000"/>
+    <text x="-8" y="70" class="dim-text">0.628 (π×m/2)</text>
+
+    <!-- Tooth height -->
+    <line x1="-50" y1="-32" x2="-65" y2="-32" class="dim"/>
+    <line x1="-50" y1="40" x2="-65" y2="40" class="dim"/>
+    <line x1="-60" y1="-32" x2="-60" y2="40" class="dim"/>
+    <polygon points="-60,-32 -57,-25 -63,-25" fill="#000"/>
+    <polygon points="-60,40 -57,33 -63,33" fill="#000"/>
+    <text x="-75" y="8" class="dim-text">0.72</text>
+
+    <!-- Circular pitch -->
+    <line x1="-31.4" y1="75" x2="-31.4" y2="95" class="dim"/>
+    <line x1="31.4" y1="75" x2="31.4" y2="95" class="dim"/>
+    <line x1="-31.4" y1="90" x2="31.4" y2="90" class="dim"/>
+    <polygon points="-31.4,90 -24.4,87 -24.4,93" fill="#000"/>
+    <polygon points="31.4,90 24.4,87 24.4,93" fill="#000"/>
+    <text x="-12" y="105" class="dim-text">1.257 (π×m)</text>
+  </g>
+
+  <!-- Circular Spline Tooth Detail -->
+  <text x="450" y="30" class="title">CIRCULAR SPLINE TOOTH (INTERNAL)</text>
+  <text x="450" y="45" class="note">SCALE 25:1</text>
+
+  <g transform="translate(550, 200)">
+    <!-- Pitch line -->
+    <line x1="-80" y1="0" x2="80" y2="0" class="center"/>
+    <text x="85" y="4" class="note">PITCH LINE</text>
+
+    <!-- Reference lines (inverted for internal) -->
+    <line x1="-80" y1="32" x2="80" y2="32" class="construction"/>
+    <text x="85" y="36" class="note" fill="#00f">ADDENDUM</text>
+
+    <line x1="-80" y1="-40" x2="80" y2="-40" class="construction"/>
+    <text x="85" y="-36" class="note" fill="#00f">DEDENDUM</text>
+
+    <!-- Internal tooth space (inverted S-curve) -->
+    <path d="M -31.4 -40
+             Q -31.4 -30, -28 -20
+             Q -24 -8, -20 0
+             Q -16 12, -12 22
+             Q -8 28, 0 32
+             Q 8 28, 12 22
+             Q 16 12, 20 0
+             Q 24 -8, 28 -20
+             Q 31.4 -30, 31.4 -40" class="circ"/>
+
+    <!-- Root arc -->
+    <circle cx="0" cy="32" r="8" class="construction"/>
+    <text x="12" y="45" class="dim-text" fill="#00f">R0.32</text>
+
+    <!-- Tip arcs -->
+    <circle cx="-31.4" cy="-40" r="12" class="construction"/>
+    <text x="-55" y="-50" class="dim-text" fill="#00f">R0.48</text>
+
+    <!-- Dimensions -->
+    <line x1="-15.7" y1="0" x2="-15.7" y2="60" class="dim"/>
+    <line x1="15.7" y1="0" x2="15.7" y2="60" class="dim"/>
+    <line x1="-15.7" y1="55" x2="15.7" y2="55" class="dim"/>
+    <text x="-8" y="70" class="dim-text">0.628</text>
+  </g>
+
+  <!-- Meshing Detail -->
+  <text x="200" y="330" class="title">TOOTH ENGAGEMENT (MESH)</text>
+  <text x="200" y="345" class="note">SHOWING FLEX SPLINE (BLACK) MESHING WITH CIRCULAR SPLINE (RED)</text>
+
+  <g transform="translate(350, 450)">
+    <!-- Flex spline teeth (3 teeth) -->
+    <path d="M -94.2 40
+             Q -94.2 30, -90.8 20 Q -86.8 8, -82.8 0 Q -78.8 -12, -74.8 -22 Q -70.8 -28, -62.8 -32
+             Q -54.8 -28, -50.8 -22 Q -46.8 -12, -42.8 0 Q -38.8 8, -34.8 20 Q -31.4 30, -31.4 40
+             Q -31.4 30, -28 20 Q -24 8, -20 0 Q -16 -12, -12 -22 Q -8 -28, 0 -32
+             Q 8 -28, 12 -22 Q 16 -12, 20 0 Q 24 8, 28 20 Q 31.4 30, 31.4 40
+             Q 31.4 30, 34.8 20 Q 38.8 8, 42.8 0 Q 46.8 -12, 50.8 -22 Q 54.8 -28, 62.8 -32
+             Q 70.8 -28, 74.8 -22 Q 78.8 -12, 82.8 0 Q 86.8 8, 90.8 20 Q 94.2 30, 94.2 40" class="flex"/>
+
+    <!-- Circular spline teeth (spaces) - offset by half pitch for engagement -->
+    <path d="M -78.5 -42
+             Q -78.5 -52, -75.1 -62 Q -71.1 -74, -67.1 -82 Q -63.1 -94, -59.1 -104 Q -55.1 -110, -47.1 -114
+             Q -39.1 -110, -35.1 -104 Q -31.1 -94, -27.1 -82 Q -23.1 -74, -19.1 -62 Q -15.7 -52, -15.7 -42
+             M 15.7 -42
+             Q 15.7 -52, 19.1 -62 Q 23.1 -74, 27.1 -82 Q 31.1 -94, 35.1 -104 Q 39.1 -110, 47.1 -114
+             Q 55.1 -110, 59.1 -104 Q 63.1 -94, 67.1 -82 Q 71.1 -74, 75.1 -62 Q 78.5 -52, 78.5 -42" class="circ"/>
+
+    <!-- Contact points -->
+    <circle cx="-47" cy="-32" r="3" fill="#0a0" stroke="none"/>
+    <circle cx="47" cy="-32" r="3" fill="#0a0" stroke="none"/>
+
+    <text x="-100" y="-60" class="note">CIRCULAR SPLINE</text>
+    <text x="-100" y="60" class="note">FLEX SPLINE</text>
+    <text x="60" y="-20" class="note" fill="#0a0">CONTACT</text>
+    <text x="60" y="-8" class="note" fill="#0a0">POINTS</text>
+  </g>
+
+  <!-- Tooth Parameter Table -->
+  <text x="20" y="380" class="title">TOOTH PARAMETERS</text>
+
+  <g transform="translate(20, 390)">
+    <rect x="0" y="0" width="300" height="120" class="outline"/>
+    <line x1="0" y1="20" x2="300" y2="20" class="outline"/>
+    <line x1="150" y1="0" x2="150" y2="120" class="outline"/>
+    <line x1="225" y1="0" x2="225" y2="120" class="outline"/>
+
+    <text x="50" y="15" class="note" font-weight="bold">PARAMETER</text>
+    <text x="165" y="15" class="note" font-weight="bold">FLEX</text>
+    <text x="240" y="15" class="note" font-weight="bold">CIRC</text>
+
+    <text x="5" y="35" class="note">Module (m)</text>
+    <text x="165" y="35" class="note">0.4</text>
+    <text x="240" y="35" class="note">0.4</text>
+
+    <text x="5" y="50" class="note">Number of Teeth (Z)</text>
+    <text x="165" y="50" class="note">200</text>
+    <text x="240" y="50" class="note">202</text>
+
+    <text x="5" y="65" class="note">Pressure Angle</text>
+    <text x="165" y="65" class="note">20°</text>
+    <text x="240" y="65" class="note">20°</text>
+
+    <text x="5" y="80" class="note">Profile Shift (x×m)</text>
+    <text x="165" y="80" class="note">+0.2</text>
+    <text x="240" y="80" class="note">-0.2</text>
+
+    <text x="5" y="95" class="note">Addendum</text>
+    <text x="165" y="95" class="note">0.32</text>
+    <text x="240" y="95" class="note">0.32</text>
+
+    <text x="5" y="110" class="note">Dedendum</text>
+    <text x="165" y="110" class="note">0.40</text>
+    <text x="240" y="110" class="note">0.40</text>
+  </g>
+
+  <!-- Notes -->
+  <text x="350" y="380" class="title">NOTES:</text>
+  <text x="350" y="395" class="note">1. TOOTH PROFILE IS DOUBLE-ARC (S-CURVE), NOT INVOLUTE</text>
+  <text x="350" y="408" class="note">2. FLEX SPLINE: POSITIVE PROFILE SHIFT (+0.5m)</text>
+  <text x="350" y="421" class="note">3. CIRCULAR SPLINE: NEGATIVE PROFILE SHIFT (-0.5m)</text>
+  <text x="350" y="434" class="note">4. TIP AND ROOT RADII CRITICAL FOR SMOOTH ENGAGEMENT</text>
+  <text x="350" y="447" class="note">5. WIRE EDM RECOMMENDED FOR BOTH SPLINES</text>
+  <text x="350" y="460" class="note">6. APPROXIMATELY 60 TEETH IN CONTACT AT EACH LOBE</text>
+  <text x="350" y="473" class="note">7. BACKLASH: 0.02-0.04mm AT PITCH LINE</text>
+</svg>

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <style>
+    .outline { fill: none; stroke: #000; stroke-width: 0.5; }
+    .thick { fill: none; stroke: #000; stroke-width: 1; }
+    .thin { fill: none; stroke: #000; stroke-width: 0.3; }
+    .dim { fill: none; stroke: #000; stroke-width: 0.25; }
+    .dim-text { font-family: Arial, sans-serif; font-size: 9px; fill: #000; }
+    .title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 12px; fill: #000; }
+    .note { font-family: Arial, sans-serif; font-size: 8px; fill: #000; }
+    .center { fill: none; stroke: #000; stroke-width: 0.25; stroke-dasharray: 12,3,2,3; }
+    .hidden { fill: none; stroke: #000; stroke-width: 0.3; stroke-dasharray: 5,2; }
+    .hatch { fill: none; stroke: #444; stroke-width: 0.15; }
+    .section-fill { fill: #e8ffe8; stroke: #000; stroke-width: 0.5; }
+    .bearing-fill { fill: #fff8e0; stroke: #000; stroke-width: 0.5; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#fff"/>
+
+  <!-- Border -->
+  <rect x="10" y="10" width="1180" height="880" fill="none" stroke="#000" stroke-width="1"/>
+
+  <!-- Title Block -->
+  <rect x="850" y="800" width="340" height="90" class="thick"/>
+  <line x1="850" y1="830" x2="1190" y2="830" class="outline"/>
+  <line x1="850" y1="855" x2="1190" y2="855" class="outline"/>
+  <line x1="850" y1="870" x2="1190" y2="870" class="outline"/>
+  <line x1="1000" y1="800" x2="1000" y2="870" class="outline"/>
+  <text x="860" y="820" class="subtitle">PART NAME:</text>
+  <text x="1010" y="820" class="title">WAVE GENERATOR</text>
+  <text x="860" y="845" class="note">MATERIAL: 6061-T6 + BEARING</text>
+  <text x="1010" y="845" class="note">BEARING: 6806-2RS</text>
+  <text x="860" y="865" class="note">SCALE: AS SHOWN</text>
+  <text x="1010" y="865" class="note">DWG NO: HD-003-A</text>
+  <text x="860" y="885" class="note">UNITS: inches (mm)</text>
+  <text x="1010" y="885" class="note">SHEET 1 OF 1</text>
+
+  <!-- VIEW 1: Top View - Elliptical Cam Profile -->
+  <text x="200" y="45" class="title">TOP VIEW - ELLIPTICAL CAM</text>
+  <text x="200" y="62" class="subtitle">SCALE 1:1</text>
+
+  <g transform="translate(280, 250)">
+    <!-- Center lines -->
+    <line x1="-150" y1="0" x2="150" y2="0" class="center"/>
+    <line x1="0" y1="-150" x2="0" y2="150" class="center"/>
+
+    <!-- Elliptical cam outer profile -->
+    <ellipse cx="0" cy="0" rx="101" ry="99" class="thick" fill="#e8ffe8"/>
+
+    <!-- Bearing outer -->
+    <circle cx="0" cy="0" r="52.5" class="thick" fill="#fff8e0"/>
+
+    <!-- Bearing inner -->
+    <circle cx="0" cy="0" r="37.5" class="thick" fill="#fff"/>
+
+    <!-- Hub -->
+    <circle cx="0" cy="0" r="37.5" class="outline"/>
+
+    <!-- Bore -->
+    <circle cx="0" cy="0" r="12.5" class="thick" fill="#fff"/>
+
+    <!-- Keyway -->
+    <rect x="-12.5" y="-5" width="25" height="7" fill="#fff" class="outline"/>
+
+    <!-- Major axis markers -->
+    <line x1="-101" y1="-5" x2="-101" y2="5" class="thick"/>
+    <line x1="101" y1="-5" x2="101" y2="5" class="thick"/>
+
+    <!-- Minor axis markers -->
+    <line x1="-5" y1="-99" x2="5" y2="-99" class="thick"/>
+    <line x1="-5" y1="99" x2="5" y2="99" class="thick"/>
+
+    <!-- Dimensions -->
+    <!-- Major axis -->
+    <line x1="-101" y1="120" x2="-101" y2="140" class="dim"/>
+    <line x1="101" y1="120" x2="101" y2="140" class="dim"/>
+    <line x1="-101" y1="130" x2="101" y2="130" class="dim"/>
+    <polygon points="-101,130 -94,127 -94,133" fill="#000"/>
+    <polygon points="101,130 94,127 94,133" fill="#000"/>
+    <text x="-45" y="145" class="dim-text">3.183 in (80.84) MAJOR</text>
+
+    <!-- Minor axis -->
+    <line x1="120" y1="-99" x2="140" y2="-99" class="dim"/>
+    <line x1="120" y1="99" x2="140" y2="99" class="dim"/>
+    <line x1="130" y1="-99" x2="130" y2="99" class="dim"/>
+    <polygon points="130,-99 127,-92 133,-92" fill="#000"/>
+    <polygon points="130,99 127,92 133,92" fill="#000"/>
+    <text x="135" y="5" class="dim-text">3.108 in (78.94)</text>
+    <text x="135" y="17" class="dim-text">MINOR</text>
+
+    <!-- Bearing OD -->
+    <line x1="37" y1="-37" x2="70" y2="-70" class="dim"/>
+    <text x="75" y="-65" class="dim-text">BEARING 6806-2RS</text>
+    <text x="75" y="-53" class="dim-text">1.18 × 1.65 × 0.28 in</text>
+
+    <!-- Bore dimension -->
+    <line x1="-8.8" y1="-8.8" x2="-30" y2="-30" class="dim"/>
+    <text x="-85" y="-25" class="dim-text">Ø0.394 in H7 BORE</text>
+
+    <!-- Keyway -->
+    <line x1="12.5" y1="-2" x2="40" y2="-20" class="dim"/>
+    <text x="45" y="-18" class="dim-text">KEYWAY 0.16×0.08 in</text>
+
+    <!-- Labels -->
+    <text x="-90" y="-60" class="note">ELLIPTICAL</text>
+    <text x="-90" y="-48" class="note">CAM PROFILE</text>
+
+    <!-- Radial deflection annotation -->
+    <line x1="85" y1="0" x2="101" y2="0" class="dim" stroke="#c00" stroke-width="0.5"/>
+    <text x="75" y="-15" class="note" fill="#c00">w=0.035 in</text>
+  </g>
+
+  <!-- VIEW 2: Section View -->
+  <text x="650" y="45" class="title">SECTION C-C</text>
+  <text x="650" y="62" class="subtitle">SCALE 2:1</text>
+
+  <g transform="translate(780, 200)">
+    <!-- Center line -->
+    <line x1="0" y1="-100" x2="0" y2="100" class="center"/>
+
+    <!-- Elliptical cam outer - left (major axis side) -->
+    <path d="M -101 -48 L -101 48" class="thick"/>
+
+    <!-- Elliptical cam outer - right -->
+    <path d="M 101 -48 L 101 48" class="thick"/>
+
+    <!-- Cam body fill -->
+    <rect x="-101" y="-48" width="48.5" height="96" class="section-fill"/>
+    <rect x="52.5" y="-48" width="48.5" height="96" class="section-fill"/>
+
+    <!-- Bearing -->
+    <rect x="-52.5" y="-35" width="15" height="70" class="bearing-fill"/>
+    <rect x="37.5" y="-35" width="15" height="70" class="bearing-fill"/>
+
+    <!-- Hub -->
+    <rect x="-37.5" y="-48" width="75" height="96" class="section-fill"/>
+
+    <!-- Bore -->
+    <rect x="-12.5" y="-48" width="25" height="96" fill="#fff" class="outline"/>
+
+    <!-- Cross hatching -->
+    <g class="hatch">
+      <!-- Left cam -->
+      <line x1="-100" y1="-40" x2="-90" y2="-30"/>
+      <line x1="-100" y1="-20" x2="-90" y2="-10"/>
+      <line x1="-100" y1="0" x2="-90" y2="10"/>
+      <line x1="-100" y1="20" x2="-90" y2="30"/>
+      <line x1="-100" y1="40" x2="-90" y2="50"/>
+      <line x1="-80" y1="-40" x2="-70" y2="-30"/>
+      <line x1="-80" y1="-20" x2="-70" y2="-10"/>
+      <line x1="-80" y1="0" x2="-70" y2="10"/>
+      <line x1="-80" y1="20" x2="-70" y2="30"/>
+      <line x1="-80" y1="40" x2="-70" y2="50"/>
+      <!-- Right cam -->
+      <line x1="55" y1="-40" x2="65" y2="-30"/>
+      <line x1="55" y1="-20" x2="65" y2="-10"/>
+      <line x1="55" y1="0" x2="65" y2="10"/>
+      <line x1="55" y1="20" x2="65" y2="30"/>
+      <line x1="55" y1="40" x2="65" y2="50"/>
+      <line x1="75" y1="-40" x2="85" y2="-30"/>
+      <line x1="75" y1="-20" x2="85" y2="-10"/>
+      <line x1="75" y1="0" x2="85" y2="10"/>
+      <line x1="75" y1="20" x2="85" y2="30"/>
+      <line x1="75" y1="40" x2="85" y2="50"/>
+      <!-- Hub hatching -->
+      <line x1="-35" y1="-45" x2="-25" y2="-35"/>
+      <line x1="-35" y1="-25" x2="-25" y2="-15"/>
+      <line x1="25" y1="-45" x2="35" y2="-35"/>
+      <line x1="25" y1="-25" x2="35" y2="-15"/>
+      <line x1="25" y1="25" x2="35" y2="35"/>
+      <line x1="25" y1="45" x2="35" y2="55"/>
+    </g>
+
+    <!-- Bearing detail lines -->
+    <line x1="-52.5" y1="-35" x2="-37.5" y2="-35" class="thin"/>
+    <line x1="-52.5" y1="35" x2="-37.5" y2="35" class="thin"/>
+    <line x1="37.5" y1="-35" x2="52.5" y2="-35" class="thin"/>
+    <line x1="37.5" y1="35" x2="52.5" y2="35" class="thin"/>
+
+    <!-- Dimensions -->
+    <!-- Overall width at major axis -->
+    <line x1="-101" y1="-65" x2="-101" y2="-85" class="dim"/>
+    <line x1="101" y1="-65" x2="101" y2="-85" class="dim"/>
+    <line x1="-101" y1="-75" x2="101" y2="-75" class="dim"/>
+    <polygon points="-101,-75 -94,-72 -94,-78" fill="#000"/>
+    <polygon points="101,-75 94,-72 94,-78" fill="#000"/>
+    <text x="-30" y="-80" class="dim-text">3.183 in (80.84)</text>
+
+    <!-- Hub width -->
+    <line x1="-37.5" y1="60" x2="-37.5" y2="80" class="dim"/>
+    <line x1="37.5" y1="60" x2="37.5" y2="80" class="dim"/>
+    <line x1="-37.5" y1="70" x2="37.5" y2="70" class="dim"/>
+    <polygon points="-37.5,70 -30.5,67 -30.5,73" fill="#000"/>
+    <polygon points="37.5,70 30.5,67 30.5,73" fill="#000"/>
+    <text x="-30" y="85" class="dim-text">Ø1.181 in (29.98) H7</text>
+
+    <!-- Bore -->
+    <line x1="-12.5" y1="60" x2="-12.5" y2="95" class="dim"/>
+    <line x1="12.5" y1="60" x2="12.5" y2="95" class="dim"/>
+    <line x1="-12.5" y1="90" x2="12.5" y2="90" class="dim"/>
+    <text x="-20" y="105" class="dim-text">Ø0.394 in (10.0) H7</text>
+
+    <!-- Height -->
+    <line x1="115" y1="-48" x2="140" y2="-48" class="dim"/>
+    <line x1="115" y1="48" x2="140" y2="48" class="dim"/>
+    <line x1="130" y1="-48" x2="130" y2="48" class="dim"/>
+    <polygon points="130,-48 127,-41 133,-41" fill="#000"/>
+    <polygon points="130,48 127,41 133,41" fill="#000"/>
+    <text x="135" y="5" class="dim-text">0.378 in (9.6)</text>
+
+    <!-- Bearing width -->
+    <line x1="-52.5" y1="-50" x2="-52.5" y2="-60" class="dim"/>
+    <line x1="-37.5" y1="-50" x2="-37.5" y2="-60" class="dim"/>
+    <line x1="-52.5" y1="-55" x2="-37.5" y2="-55" class="dim"/>
+    <text x="-55" y="-63" class="dim-text">0.276 in (7.0)</text>
+
+    <!-- Labels -->
+    <text x="-130" y="-35" class="note">CAM</text>
+    <text x="-130" y="-23" class="note">SLEEVE</text>
+
+    <text x="-50" y="-55" class="note">BEARING</text>
+
+    <text x="-30" y="20" class="note">HUB</text>
+
+    <!-- Section indicators -->
+    <text x="-115" y="-48" class="subtitle">C</text>
+    <text x="110" y="-48" class="subtitle">C</text>
+  </g>
+
+  <!-- VIEW 3: Hub Detail -->
+  <text x="200" y="450" class="title">HUB DETAIL</text>
+  <text x="200" y="467" class="subtitle">SCALE 3:1</text>
+
+  <g transform="translate(280, 620)">
+    <!-- Center line -->
+    <line x1="0" y1="-100" x2="0" y2="100" class="center"/>
+
+    <!-- Hub profile -->
+    <rect x="-45" y="-48" width="90" height="96" class="section-fill"/>
+
+    <!-- Bearing seat -->
+    <rect x="-52.5" y="-35" width="7.5" height="70" fill="#ffd" stroke="#000" stroke-width="0.3"/>
+    <rect x="45" y="-35" width="7.5" height="70" fill="#ffd" stroke="#000" stroke-width="0.3"/>
+
+    <!-- Bore -->
+    <rect x="-15" y="-48" width="30" height="96" fill="#fff" class="outline"/>
+
+    <!-- Keyway detail -->
+    <rect x="-15" y="-48" width="30" height="6" fill="#ddd" class="outline"/>
+
+    <!-- Dimensions -->
+    <!-- Hub OD -->
+    <line x1="-45" y1="-65" x2="-45" y2="-85" class="dim"/>
+    <line x1="45" y1="-65" x2="45" y2="-85" class="dim"/>
+    <line x1="-45" y1="-75" x2="45" y2="-75" class="dim"/>
+    <polygon points="-45,-75 -38,-72 -38,-78" fill="#000"/>
+    <polygon points="45,-75 38,-72 38,-78" fill="#000"/>
+    <text x="-35" y="-80" class="dim-text">Ø1.181 in (29.98) H7</text>
+
+    <!-- Bearing seat diameter -->
+    <line x1="-52.5" y1="55" x2="-52.5" y2="75" class="dim"/>
+    <line x1="52.5" y1="55" x2="52.5" y2="75" class="dim"/>
+    <line x1="-52.5" y1="65" x2="52.5" y2="65" class="dim"/>
+    <polygon points="-52.5,65 -45.5,62 -45.5,68" fill="#000"/>
+    <polygon points="52.5,65 45.5,62 45.5,68" fill="#000"/>
+    <text x="-35" y="80" class="dim-text">Ø1.181 in (30.0) +0.001</text>
+
+    <!-- Bore -->
+    <line x1="-15" y1="85" x2="15" y2="85" class="dim"/>
+    <text x="-25" y="100" class="dim-text">Ø0.394 in (10.0) H7</text>
+
+    <!-- Bearing seat height -->
+    <line x1="65" y1="-35" x2="85" y2="-35" class="dim"/>
+    <line x1="65" y1="35" x2="85" y2="35" class="dim"/>
+    <line x1="75" y1="-35" x2="75" y2="35" class="dim"/>
+    <polygon points="75,-35 72,-28 78,-28" fill="#000"/>
+    <polygon points="75,35 72,28 78,28" fill="#000"/>
+    <text x="80" y="5" class="dim-text">0.276 in (7.0)</text>
+
+    <!-- Keyway -->
+    <line x1="-15" y1="-48" x2="-15" y2="-60" class="dim"/>
+    <line x1="15" y1="-48" x2="15" y2="-60" class="dim"/>
+    <line x1="-15" y1="-55" x2="15" y2="-55" class="dim"/>
+    <text x="-15" y="-62" class="dim-text">0.157 in (4.0)</text>
+
+    <line x1="-20" y1="-48" x2="-20" y2="-42" class="dim"/>
+    <text x="-45" y="-43" class="dim-text">0.079 in DEEP</text>
+
+    <!-- Labels -->
+    <text x="-70" y="0" class="note">PRESS FIT</text>
+    <text x="-70" y="12" class="note">H7/p6</text>
+  </g>
+
+  <!-- VIEW 4: Ellipse Construction -->
+  <text x="650" y="450" class="title">ELLIPSE CONSTRUCTION</text>
+  <text x="650" y="467" class="subtitle">REFERENCE</text>
+
+  <g transform="translate(780, 620)">
+    <!-- Axes -->
+    <line x1="-120" y1="0" x2="120" y2="0" class="center"/>
+    <line x1="0" y1="-100" x2="0" y2="100" class="center"/>
+
+    <!-- Ellipse -->
+    <ellipse cx="0" cy="0" rx="101" ry="99" fill="none" class="thick"/>
+
+    <!-- Reference circle (nominal) -->
+    <circle cx="0" cy="0" r="99" fill="none" class="thin" stroke-dasharray="5,5"/>
+
+    <!-- Semi-axes -->
+    <line x1="0" y1="0" x2="101" y2="0" class="dim" stroke="#c00"/>
+    <line x1="0" y1="0" x2="0" y2="-99" class="dim" stroke="#00c"/>
+
+    <!-- Annotations -->
+    <text x="40" y="-12" class="note" fill="#c00">a = 1.591 in (40.42)</text>
+    <text x="5" y="-45" class="note" fill="#00c">b = 1.554 in (39.47)</text>
+
+    <!-- Deflection -->
+    <line x1="99" y1="5" x2="99" y2="15" class="dim"/>
+    <line x1="101" y1="5" x2="101" y2="15" class="dim"/>
+    <line x1="99" y1="10" x2="101" y2="10" class="dim"/>
+    <text x="85" y="25" class="note">w = 0.035 in (0.9)</text>
+
+    <!-- Formula -->
+    <text x="-100" y="70" class="note">MAJOR = D_inner + 2w = 3.112 + 0.071 = 3.183 in</text>
+    <text x="-100" y="85" class="note">MINOR = D_inner - 0.004 = 3.108 in (clearance)</text>
+  </g>
+
+  <!-- Notes Section -->
+  <rect x="30" y="760" width="400" height="120" class="outline"/>
+  <text x="40" y="780" class="subtitle">MANUFACTURING NOTES:</text>
+  <text x="40" y="798" class="note">1. TURN HUB FROM 6061-T6 ALUMINUM BAR STOCK</text>
+  <text x="40" y="813" class="note">2. MILL ELLIPTICAL CAM PROFILE (4-AXIS CNC PREFERRED)</text>
+  <text x="40" y="828" class="note">3. GRIND BEARING SEAT TO H7 TOLERANCE</text>
+  <text x="40" y="843" class="note">4. PRESS FIT BEARING 6806-2RS (110-340 lbf FORCE)</text>
+  <text x="40" y="858" class="note">5. BORE H7 FOR MOTOR SHAFT</text>
+  <text x="40" y="873" class="note">6. KEYWAY OPTIONAL - MATCH TO MOTOR SHAFT</text>
+
+  <!-- Bearing Specs Table -->
+  <rect x="450" y="760" width="380" height="120" class="outline"/>
+  <text x="460" y="780" class="subtitle">BEARING SPECIFICATIONS (6806-2RS):</text>
+  <line x1="450" y1="790" x2="830" y2="790" class="thin"/>
+  <line x1="580" y1="760" x2="580" y2="880" class="thin"/>
+
+  <text x="460" y="808" class="note">Inner Diameter (d)</text>
+  <text x="590" y="808" class="note">1.181 in (30)</text>
+
+  <text x="460" y="823" class="note">Outer Diameter (D)</text>
+  <text x="590" y="823" class="note">1.654 in (42)</text>
+
+  <text x="460" y="838" class="note">Width (B)</text>
+  <text x="590" y="838" class="note">0.276 in (7)</text>
+
+  <text x="460" y="853" class="note">Dynamic Load Rating (C)</text>
+  <text x="590" y="853" class="note">4.2 kN</text>
+
+  <text x="460" y="868" class="note">Static Load Rating (C₀)</text>
+  <text x="590" y="868" class="note">2.4 kN</text>
+</svg>

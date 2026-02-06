@@ -1,0 +1,107 @@
+' ============================================================================
+' FLEX SPLINE - SolidWorks VBA Macro
+' Creates parametric flex spline part for harmonic drive
+'
+' Usage:
+' 1. Open SolidWorks
+' 2. Tools > Macro > Run
+' 3. Select this file
+' ============================================================================
+
+Dim swApp As SldWorks.SldWorks
+Dim swModel As SldWorks.ModelDoc2
+Dim swPart As SldWorks.PartDoc
+Dim swSketch As SldWorks.Sketch
+Dim swFeat As SldWorks.Feature
+
+' Design Parameters (modify these as needed)
+Const GEAR_RATIO As Double = 100
+Const TOOTH_DIFF As Integer = 2
+Const MODULE_M As Double = 0.0004  ' 0.4mm in meters
+
+Sub main()
+    ' Initialize SolidWorks
+    Set swApp = Application.SldWorks
+
+    ' Derived parameters
+    Dim zFlex As Integer
+    Dim pitchDia As Double
+    Dim outerDia As Double
+    Dim innerDia As Double
+    Dim wallThick As Double
+    Dim cupDepth As Double
+    Dim baseThick As Double
+    Dim toothZone As Double
+    Dim filletRad As Double
+
+    zFlex = GEAR_RATIO * TOOTH_DIFF          ' 200 teeth
+    pitchDia = zFlex * MODULE_M               ' 0.080 m
+    outerDia = pitchDia + (2 * 0.8 * MODULE_M)  ' 0.08064 m
+    wallThick = 0.01 * pitchDia               ' 0.0008 m
+    innerDia = outerDia - (2 * wallThick)     ' 0.07904 m
+    cupDepth = 0.30 * pitchDia                ' 0.024 m
+    baseThick = 3 * wallThick                 ' 0.0024 m
+    toothZone = 0.12 * pitchDia               ' 0.0096 m
+    filletRad = 2.5 * wallThick               ' 0.002 m
+
+    ' Create new part document
+    Set swModel = swApp.NewDocument("C:\ProgramData\SolidWorks\SOLIDWORKS 2023\templates\Part.prtdot", 0, 0, 0)
+    Set swPart = swModel
+
+    ' ========================================
+    ' Step 1: Create cup profile sketch
+    ' ========================================
+    swModel.Extension.SelectByID2 "Front Plane", "PLANE", 0, 0, 0, False, 0, Nothing, 0
+    swModel.SketchManager.InsertSketch True
+
+    ' Draw cup profile (half section for revolve)
+    ' Outer profile
+    swModel.SketchManager.CreateLine 0, 0, 0, outerDia / 2, 0, 0
+    swModel.SketchManager.CreateLine outerDia / 2, 0, 0, outerDia / 2, cupDepth - toothZone, 0
+    swModel.SketchManager.CreateLine outerDia / 2, cupDepth - toothZone, 0, outerDia / 2, cupDepth, 0
+
+    ' Bottom arc
+    swModel.SketchManager.CreateArc outerDia / 2 - (outerDia / 2 - innerDia / 2) / 2, cupDepth, 0, _
+        outerDia / 2, cupDepth, 0, innerDia / 2, cupDepth, 0, -1
+
+    ' Inner profile
+    swModel.SketchManager.CreateLine innerDia / 2, cupDepth, 0, innerDia / 2, baseThick, 0
+    swModel.SketchManager.CreateLine innerDia / 2, baseThick, 0, 0, baseThick, 0
+    swModel.SketchManager.CreateLine 0, baseThick, 0, 0, 0, 0
+
+    swModel.SketchManager.InsertSketch True
+
+    ' ========================================
+    ' Step 2: Revolve to create cup
+    ' ========================================
+    swModel.Extension.SelectByID2 "Sketch1", "SKETCH", 0, 0, 0, False, 0, Nothing, 0
+    swModel.FeatureManager.FeatureRevolve2 True, True, False, False, False, False, _
+        0, 0, 6.28318530718, 0, False, False, 0.01, 0.01, 0, 0, 0, True, True, True
+
+    ' ========================================
+    ' Step 3: Add fillet at base
+    ' ========================================
+    ' Select inner edge at base
+    swModel.Extension.SelectByID2 "", "EDGE", innerDia / 2, baseThick, 0, False, 1, Nothing, 0
+    swModel.FeatureManager.FeatureFillet3 194, filletRad, 0.01, 0, 0, 0, 0, Array(), 0, Array(), 0, Array(), 0, Array()
+
+    ' ========================================
+    ' Step 4: Set material
+    ' ========================================
+    swPart.SetMaterialPropertyName2 "", "", "17-4PH stainless steel (H900)"
+
+    ' ========================================
+    ' Step 5: Save part
+    ' ========================================
+    swModel.SaveAs3 "C:\HarmonicDrive\FlexSpline.SLDPRT", 0, 2
+
+    MsgBox "Flex Spline created successfully!" & vbCrLf & vbCrLf & _
+           "Parameters:" & vbCrLf & _
+           "Teeth: " & zFlex & vbCrLf & _
+           "Module: " & MODULE_M * 1000 & " mm" & vbCrLf & _
+           "Outer Diameter: " & outerDia * 1000 & " mm" & vbCrLf & _
+           "Wall Thickness: " & wallThick * 1000 & " mm" & vbCrLf & _
+           "Cup Depth: " & cupDepth * 1000 & " mm", _
+           vbInformation, "Harmonic Drive - Flex Spline"
+
+End Sub

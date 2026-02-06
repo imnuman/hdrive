@@ -1,0 +1,186 @@
+================================================================================
+                    HARMONIC DRIVE MANUFACTURING DIMENSIONS
+                         100:1 Ratio, 40Nm Output Torque
+                    ALL DIMENSIONS: INCHES (MM IN PARENTHESES)
+================================================================================
+
+DRAWING LIST:
+  HD-001  Flex Spline
+  HD-002  Circular Spline
+  HD-003  Wave Generator
+  HD-004  Tooth Profile Detail
+  HD-005  Assembly
+
+================================================================================
+                              FLEX SPLINE (HD-001)
+================================================================================
+Material: 17-4 PH Stainless Steel, Condition H900
+Surface Treatment: Nitride 0.004-0.008 in (0.1-0.2 mm) case depth
+Number of Teeth: 200 (external, S-curve profile)
+
+DIMENSION                          INCHES      (mm)        TOLERANCE
+--------------------------------------------------------------------------------
+Outer Diameter (at teeth)          3.175       (80.64)     +/-0.0008
+Inner Diameter                     3.112       (79.04)     +/-0.0008
+Pitch Diameter                     3.150       (80.00)     REF
+Wall Thickness                     0.031       (0.80)      +/-0.002 CRITICAL
+Cup Depth                          0.945       (24.0)      +/-0.004
+Base Thickness                     0.094       (2.4)       +/-0.004
+Fillet Radius (base)               0.079       (2.0)       MIN
+Tooth Zone Width                   0.378       (9.6)       +/-0.004
+
+TOOTH PARAMETERS:
+Number of Teeth                    200
+Module                             0.0157 in   (0.4 mm)
+Pressure Angle                     20 deg
+Addendum                           0.0126      (0.32)
+Dedendum                           0.0157      (0.40)
+Tooth Height                       0.0283      (0.72)
+Circular Pitch                     0.0495      (1.257)
+Tip Radius                         0.0126      (0.32)      R0.32
+Root Radius                        0.0189      (0.48)      R0.48
+Profile Shift                      +0.008      (+0.2)      Positive shift
+
+SURFACE FINISH:
+Teeth                              Ra 32 uin   (Ra 0.8 um)
+Cup Interior                       Ra 63 uin   (Ra 1.6 um)
+Cup Exterior                       Ra 63 uin   (Ra 1.6 um)
+
+================================================================================
+                           CIRCULAR SPLINE (HD-002)
+================================================================================
+Material: Aluminum 7075-T6
+Surface Treatment: Hard Anodize Type III, 0.001-0.002 in (0.025-0.05 mm)
+Number of Teeth: 202 (internal, S-curve profile)
+
+DIMENSION                          INCHES      (mm)        TOLERANCE
+--------------------------------------------------------------------------------
+Outer Diameter                     3.937       (100.0)     +/-0.002
+Inner Diameter (at teeth)          3.156       (80.16)     +/-0.0008
+Pitch Diameter                     3.181       (80.80)     REF
+Ring Thickness                     0.394       (10.0)      +/-0.004
+Ring Height                        0.535       (13.6)      +/-0.004
+
+MOUNTING HOLES:
+Bolt Circle Diameter               3.701       (94.0)      +/-0.004
+Number of Holes                    6
+Hole Diameter                      0.165       (4.2)       M4 clearance
+Angular Spacing                    60 deg      +/-0.5 deg
+
+TOOTH PARAMETERS:
+Number of Teeth                    202
+Module                             0.0157 in   (0.4 mm)
+Pressure Angle                     20 deg
+Addendum                           0.0126      (0.32)
+Dedendum                           0.0157      (0.40)
+Tooth Height                       0.0283      (0.72)
+Profile Shift                      -0.008      (-0.2)      Negative shift
+
+SURFACE FINISH:
+Teeth                              Ra 32 uin   (Ra 0.8 um)
+External Surface                   Ra 125 uin  (Ra 3.2 um)
+
+================================================================================
+                           WAVE GENERATOR (HD-003)
+================================================================================
+Material: Aluminum 6061-T6 (Hub), Steel Bearing 6806-2RS
+Surface Treatment: None (or clear anodize for corrosion)
+
+DIMENSION                          INCHES      (mm)        TOLERANCE
+--------------------------------------------------------------------------------
+ELLIPTICAL CAM:
+Major Axis                         3.183       (80.84)     +/-0.0008
+Minor Axis                         3.108       (78.94)     +/-0.0008
+Radial Deflection                  0.035       (0.9)       Calculated
+Cam Width                          0.378       (9.6)       +/-0.004
+
+HUB:
+Hub Outer Diameter                 1.181       (29.98)     H7 (press fit)
+Hub Inner Diameter (Bore)          0.394       (10.0)      H7 (motor shaft)
+Hub Length                         0.378       (9.6)       +/-0.004
+
+BEARING SEAT:
+Bearing OD                         1.654       (42.0)      REF
+Bearing ID                         1.181       (30.0)      REF
+Bearing Width                      0.276       (7.0)       REF
+Fit                                H7/p6                   Interference
+
+KEYWAY (OPTIONAL):
+Width                              0.157       (4.0)       +/-0.002
+Depth                              0.079       (2.0)       +/-0.002
+Length                             0.378       (9.6)
+
+SURFACE FINISH:
+Bearing Seat                       Ra 32 uin   (Ra 0.8 um)
+Bore                               Ra 63 uin   (Ra 1.6 um)
+Cam Surface                        Ra 63 uin   (Ra 1.6 um)
+
+================================================================================
+                           TOLERANCES & FITS SUMMARY
+================================================================================
+
+INTERFACE                          FIT TYPE         SPECIFICATION
+--------------------------------------------------------------------------------
+Wave gen hub -> Bearing ID          Press fit        H7/p6 (+0.0006 to +0.0014 in)
+Bearing OD -> Cam sleeve            Press fit        H7/p6
+Flex spline -> Wave generator       Running          0.002-0.004 in radial clearance
+Circular spline <-> Flex spline     Tooth mesh       0.0008-0.0016 in backlash
+
+================================================================================
+                           MANUFACTURING PROCESS
+================================================================================
+
+FLEX SPLINE:
+1. Rough turn cup from bar stock (leave 0.020 in for finish)
+2. Heat treat to H900 condition
+3. Finish turn cup to final dimensions
+4. Wire EDM external teeth (S-curve profile - 200 teeth)
+5. Nitride surface 0.004-0.008 in (0.1-0.2 mm) case depth
+6. Final inspection
+
+CIRCULAR SPLINE:
+1. Turn ring from plate stock
+2. Wire EDM internal teeth (202 teeth)
+3. Drill and tap mounting holes
+4. Hard anodize Type III
+5. Final inspection
+
+WAVE GENERATOR:
+1. Turn hub from bar stock
+2. Mill elliptical cam profile (4-axis CNC)
+3. Grind bearing seat to H7 tolerance
+4. Press fit bearing 6806-2RS
+5. Final inspection
+
+================================================================================
+                           INSPECTION CHECKLIST
+================================================================================
+
+FLEX SPLINE:
+[ ] Wall thickness uniformity (check at 8 points, 45 deg apart)
+[ ] Concentricity of teeth to bore < 0.0008 in TIR
+[ ] Tooth profile per HD-004 (S-curve)
+[ ] Surface hardness after nitriding (600+ HV)
+[ ] No cracks at base fillet
+[ ] Count: 200 teeth exactly
+
+CIRCULAR SPLINE:
+[ ] Internal teeth pitch diameter within tolerance
+[ ] Tooth profile per HD-004 (S-curve)
+[ ] Mounting holes position within 0.004 in
+[ ] Anodize thickness 0.001-0.002 in
+[ ] Count: 202 teeth exactly
+
+WAVE GENERATOR:
+[ ] Ellipse major/minor axes within tolerance
+[ ] Bearing press fit force 110-340 lbf (500-1500N)
+[ ] Smooth bearing rotation after assembly
+[ ] Hub bore concentricity < 0.0008 in TIR
+
+ASSEMBLY:
+[ ] Smooth rotation through 360 deg (no binding)
+[ ] Backlash 0.0008-0.0016 in (check at 4 positions)
+[ ] No visible tooth interference marks
+[ ] Torque test to 40Nm without slip
+
+================================================================================

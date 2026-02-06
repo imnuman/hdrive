@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <style>
+    .outline { fill: none; stroke: #000; stroke-width: 0.5; }
+    .thick { fill: none; stroke: #000; stroke-width: 1; }
+    .thin { fill: none; stroke: #000; stroke-width: 0.3; }
+    .dim { fill: none; stroke: #000; stroke-width: 0.25; }
+    .dim-text { font-family: Arial, sans-serif; font-size: 9px; fill: #000; }
+    .title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 12px; fill: #000; }
+    .note { font-family: Arial, sans-serif; font-size: 8px; fill: #000; }
+    .center { fill: none; stroke: #000; stroke-width: 0.25; stroke-dasharray: 12,3,2,3; }
+    .hidden { fill: none; stroke: #000; stroke-width: 0.3; stroke-dasharray: 5,2; }
+    .flex { fill: #e8e8ff; stroke: #000; stroke-width: 0.5; }
+    .circ { fill: #ffe8e8; stroke: #000; stroke-width: 0.5; }
+    .wave { fill: #e8ffe8; stroke: #000; stroke-width: 0.5; }
+    .bearing { fill: #fff8e0; stroke: #000; stroke-width: 0.5; }
+    .arrow { fill: #000; stroke: none; }
+    .callout { font-family: Arial, sans-serif; font-size: 10px; fill: #000; font-weight: bold; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#fff"/>
+
+  <!-- Border -->
+  <rect x="10" y="10" width="1180" height="880" fill="none" stroke="#000" stroke-width="1"/>
+
+  <!-- Title Block -->
+  <rect x="850" y="800" width="340" height="90" class="thick"/>
+  <line x1="850" y1="830" x2="1190" y2="830" class="outline"/>
+  <line x1="850" y1="855" x2="1190" y2="855" class="outline"/>
+  <line x1="850" y1="870" x2="1190" y2="870" class="outline"/>
+  <line x1="1000" y1="800" x2="1000" y2="870" class="outline"/>
+  <text x="860" y="820" class="subtitle">ASSEMBLY:</text>
+  <text x="1010" y="820" class="title">HARMONIC DRIVE</text>
+  <text x="860" y="845" class="note">RATIO: 100:1</text>
+  <text x="1010" y="845" class="note">TORQUE: 40 Nm</text>
+  <text x="860" y="865" class="note">SCALE: AS SHOWN</text>
+  <text x="1010" y="865" class="note">DWG NO: HD-005-A</text>
+  <text x="860" y="885" class="note">UNITS: inches (mm)</text>
+  <text x="1010" y="885" class="note">SHEET 1 OF 1</text>
+
+  <!-- EXPLODED VIEW -->
+  <text x="150" y="45" class="title">EXPLODED VIEW</text>
+  <text x="150" y="62" class="subtitle">SCALE 1:1</text>
+
+  <g transform="translate(220, 350)">
+    <!-- Item 1: Circular Spline (Top) -->
+    <g transform="translate(0, -180)">
+      <!-- Ring section -->
+      <rect x="-125" y="0" width="25" height="34" class="circ"/>
+      <rect x="100" y="0" width="25" height="34" class="circ"/>
+      <!-- Internal teeth -->
+      <rect x="-100" y="0" width="5" height="34" fill="#fcc" stroke="#000" stroke-width="0.3"/>
+      <rect x="95" y="0" width="5" height="34" fill="#fcc" stroke="#000" stroke-width="0.3"/>
+      <!-- Bolt holes -->
+      <circle cx="-113" cy="17" r="4" fill="#fff" class="thin"/>
+      <circle cx="113" cy="17" r="4" fill="#fff" class="thin"/>
+
+      <!-- Callout -->
+      <line x1="130" y1="17" x2="180" y2="17" class="thin"/>
+      <circle cx="190" cy="17" r="12" class="outline"/>
+      <text x="186" y="21" class="callout">1</text>
+    </g>
+
+    <!-- Assembly arrow 1 -->
+    <line x1="0" y1="-140" x2="0" y2="-100" stroke="#000" stroke-width="1.5"/>
+    <polygon points="0,-95 -6,-110 6,-110" class="arrow"/>
+
+    <!-- Item 2: Flex Spline (Middle) -->
+    <g transform="translate(0, 0)">
+      <!-- Cup profile -->
+      <path d="M -80 -70 L -80 50 Q -80 70 -60 70 L 60 70 Q 80 70 80 50 L 80 -70" class="flex"/>
+      <path d="M -72 -70 L -72 45 Q -72 62 -55 62 L 55 62 Q 72 62 72 45 L 72 -70" fill="#fff" stroke="#000" stroke-width="0.3"/>
+      <!-- Teeth zone -->
+      <rect x="-84" y="-70" width="8" height="48" fill="#ccf" stroke="#000" stroke-width="0.3"/>
+      <rect x="76" y="-70" width="8" height="48" fill="#ccf" stroke="#000" stroke-width="0.3"/>
+
+      <!-- Callout -->
+      <line x1="90" y1="0" x2="180" y2="0" class="thin"/>
+      <circle cx="190" cy="0" r="12" class="outline"/>
+      <text x="186" y="4" class="callout">2</text>
+    </g>
+
+    <!-- Assembly arrow 2 -->
+    <line x1="0" y1="80" x2="0" y2="120" stroke="#000" stroke-width="1.5"/>
+    <polygon points="0,125 -6,110 6,110" class="arrow"/>
+
+    <!-- Item 3: Wave Generator (Bottom) -->
+    <g transform="translate(0, 180)">
+      <!-- Hub -->
+      <rect x="-30" y="-24" width="60" height="48" class="wave"/>
+      <!-- Bearing -->
+      <rect x="-42" y="-17" width="12" height="34" class="bearing"/>
+      <rect x="30" y="-17" width="12" height="34" class="bearing"/>
+      <!-- Elliptical cam outline -->
+      <ellipse cx="0" cy="0" rx="52" ry="44" fill="none" stroke="#000" stroke-width="0.3" stroke-dasharray="4,2"/>
+      <!-- Bore -->
+      <rect x="-10" y="-24" width="20" height="48" fill="#fff" class="outline"/>
+
+      <!-- Callout -->
+      <line x1="60" y1="0" x2="180" y2="0" class="thin"/>
+      <circle cx="190" cy="0" r="12" class="outline"/>
+      <text x="186" y="4" class="callout">3</text>
+    </g>
+  </g>
+
+  <!-- ASSEMBLED SECTION VIEW -->
+  <text x="550" y="45" class="title">ASSEMBLED SECTION VIEW</text>
+  <text x="550" y="62" class="subtitle">SCALE 1.5:1</text>
+
+  <g transform="translate(680, 280)">
+    <!-- Center line -->
+    <line x1="0" y1="-200" x2="0" y2="150" class="center"/>
+
+    <!-- Circular Spline (outermost) -->
+    <rect x="-150" y="-17" width="30" height="34" class="circ"/>
+    <rect x="120" y="-17" width="30" height="34" class="circ"/>
+    <rect x="-120" y="-17" width="5" height="34" fill="#fcc" stroke="#000" stroke-width="0.3"/>
+    <rect x="115" y="-17" width="5" height="34" fill="#fcc" stroke="#000" stroke-width="0.3"/>
+
+    <!-- Flex Spline (deformed elliptically) -->
+    <ellipse cx="0" cy="40" rx="112" ry="100" fill="none" class="flex"/>
+    <ellipse cx="0" cy="40" rx="104" ry="92" fill="#fff" stroke="#000" stroke-width="0.3"/>
+
+    <!-- Teeth engagement zones -->
+    <rect x="-116" y="-17" width="8" height="24" fill="#ccf" stroke="#000" stroke-width="0.3"/>
+    <rect x="108" y="-17" width="8" height="24" fill="#ccf" stroke="#000" stroke-width="0.3"/>
+
+    <!-- Flex spline base -->
+    <ellipse cx="0" cy="130" rx="100" ry="12" class="flex"/>
+
+    <!-- Wave Generator -->
+    <ellipse cx="0" cy="0" rx="52" ry="44" class="wave"/>
+    <!-- Bearing -->
+    <ellipse cx="0" cy="0" rx="42" ry="35" class="bearing"/>
+    <!-- Hub -->
+    <circle cx="0" cy="0" r="30" fill="#e8ffe8" class="outline"/>
+    <!-- Bore -->
+    <circle cx="0" cy="0" r="12" fill="#fff" class="outline"/>
+
+    <!-- Mesh indicators -->
+    <circle cx="-114" cy="0" r="4" fill="#0a0" stroke="none"/>
+    <circle cx="114" cy="0" r="4" fill="#0a0" stroke="none"/>
+    <text x="-100" y="-25" class="note" fill="#0a0">MESH</text>
+    <text x="90" y="-25" class="note" fill="#0a0">MESH</text>
+
+    <!-- Gap indicators -->
+    <text x="-15" y="-70" class="note">GAP</text>
+    <text x="-15" y="115" class="note">GAP</text>
+
+    <!-- Dimensions -->
+    <!-- Overall diameter -->
+    <line x1="-150" y1="-35" x2="-150" y2="-55" class="dim"/>
+    <line x1="150" y1="-35" x2="150" y2="-55" class="dim"/>
+    <line x1="-150" y1="-45" x2="150" y2="-45" class="dim"/>
+    <polygon points="-150,-45 -143,-42 -143,-48" fill="#000"/>
+    <polygon points="150,-45 143,-42 143,-48" fill="#000"/>
+    <text x="-35" y="-50" class="dim-text">Ø3.937 in (100.0)</text>
+
+    <!-- Overall height -->
+    <line x1="165" y1="-17" x2="190" y2="-17" class="dim"/>
+    <line x1="165" y1="140" x2="190" y2="140" class="dim"/>
+    <line x1="180" y1="-17" x2="180" y2="140" class="dim"/>
+    <polygon points="180,-17 177,-10 183,-10" fill="#000"/>
+    <polygon points="180,140 177,133 183,133" fill="#000"/>
+    <text x="185" y="65" class="dim-text">~1.46 in</text>
+
+    <!-- Input/Output labels -->
+    <path d="M -8 -5 A 10 10 0 1 1 -8 5" fill="none" stroke="#00f" stroke-width="1"/>
+    <polygon points="-8,5 -12,0 -4,0" fill="#00f"/>
+    <text x="-35" y="20" class="note" fill="#00f">INPUT</text>
+    <text x="-40" y="32" class="note" fill="#00f">(FAST)</text>
+
+    <path d="M 155 -10 A 155 155 0 0 0 155 10" fill="none" stroke="#c00" stroke-width="1"/>
+    <polygon points="155,10 160,5 150,5" fill="#c00"/>
+    <text x="160" y="20" class="note" fill="#c00">OUTPUT</text>
+    <text x="160" y="32" class="note" fill="#c00">(1/100)</text>
+  </g>
+
+  <!-- TOP VIEW ASSEMBLED -->
+  <text x="200" y="520" class="title">TOP VIEW - ASSEMBLED</text>
+  <text x="200" y="537" class="subtitle">SCALE 1:1</text>
+
+  <g transform="translate(280, 680)">
+    <!-- Center lines -->
+    <line x1="-140" y1="0" x2="140" y2="0" class="center"/>
+    <line x1="0" y1="-140" x2="0" y2="140" class="center"/>
+
+    <!-- Circular spline outer -->
+    <circle cx="0" cy="0" r="125" class="circ"/>
+    <!-- Circular spline inner -->
+    <circle cx="0" cy="0" r="100" fill="#fff" class="outline"/>
+
+    <!-- Flex spline (elliptical) -->
+    <ellipse cx="0" cy="0" rx="98" ry="90" class="flex"/>
+    <ellipse cx="0" cy="0" rx="90" ry="82" fill="#fff" class="outline"/>
+
+    <!-- Wave generator -->
+    <ellipse cx="0" cy="0" rx="52" ry="44" class="wave"/>
+    <circle cx="0" cy="0" r="30" fill="#e8ffe8" class="outline"/>
+    <circle cx="0" cy="0" r="12" fill="#fff" class="outline"/>
+
+    <!-- Bolt holes -->
+    <circle cx="0" cy="-118" r="5" fill="#fff" class="thin"/>
+    <circle cx="102" cy="-59" r="5" fill="#fff" class="thin"/>
+    <circle cx="102" cy="59" r="5" fill="#fff" class="thin"/>
+    <circle cx="0" cy="118" r="5" fill="#fff" class="thin"/>
+    <circle cx="-102" cy="59" r="5" fill="#fff" class="thin"/>
+    <circle cx="-102" cy="-59" r="5" fill="#fff" class="thin"/>
+
+    <!-- Mesh points -->
+    <circle cx="-97" cy="0" r="5" fill="#0a0" stroke="none"/>
+    <circle cx="97" cy="0" r="5" fill="#0a0" stroke="none"/>
+  </g>
+
+  <!-- BILL OF MATERIALS -->
+  <text x="550" y="520" class="title">BILL OF MATERIALS</text>
+
+  <g transform="translate(550, 540)">
+    <rect x="0" y="0" width="450" height="150" class="outline"/>
+
+    <!-- Header -->
+    <rect x="0" y="0" width="450" height="22" fill="#ddd" class="outline"/>
+    <line x1="35" y1="0" x2="35" y2="150" class="thin"/>
+    <line x1="170" y1="0" x2="170" y2="150" class="thin"/>
+    <line x1="290" y1="0" x2="290" y2="150" class="thin"/>
+    <line x1="330" y1="0" x2="330" y2="150" class="thin"/>
+    <line x1="390" y1="0" x2="390" y2="150" class="thin"/>
+
+    <text x="8" y="15" class="note" font-weight="bold">NO</text>
+    <text x="80" y="15" class="note" font-weight="bold">PART NAME</text>
+    <text x="210" y="15" class="note" font-weight="bold">MATERIAL</text>
+    <text x="300" y="15" class="note" font-weight="bold">QTY</text>
+    <text x="345" y="15" class="note" font-weight="bold">DWG</text>
+    <text x="405" y="15" class="note" font-weight="bold">NOTES</text>
+
+    <!-- Data rows -->
+    <line x1="0" y1="44" x2="450" y2="44" class="thin"/>
+    <text x="12" y="37" class="note">1</text>
+    <text x="45" y="37" class="note">Circular Spline</text>
+    <text x="180" y="37" class="note">7075-T6 Aluminum</text>
+    <text x="305" y="37" class="note">1</text>
+    <text x="340" y="37" class="note">HD-002</text>
+    <text x="400" y="37" class="note">Hard anodize</text>
+
+    <line x1="0" y1="66" x2="450" y2="66" class="thin"/>
+    <text x="12" y="59" class="note">2</text>
+    <text x="45" y="59" class="note">Flex Spline</text>
+    <text x="180" y="59" class="note">17-4 PH Stainless</text>
+    <text x="305" y="59" class="note">1</text>
+    <text x="340" y="59" class="note">HD-001</text>
+    <text x="400" y="59" class="note">Nitride</text>
+
+    <line x1="0" y1="88" x2="450" y2="88" class="thin"/>
+    <text x="12" y="81" class="note">3</text>
+    <text x="45" y="81" class="note">Wave Generator Hub</text>
+    <text x="180" y="81" class="note">6061-T6 Aluminum</text>
+    <text x="305" y="81" class="note">1</text>
+    <text x="340" y="81" class="note">HD-003</text>
+    <text x="400" y="81" class="note">-</text>
+
+    <line x1="0" y1="110" x2="450" y2="110" class="thin"/>
+    <text x="12" y="103" class="note">4</text>
+    <text x="45" y="103" class="note">Bearing 6806-2RS</text>
+    <text x="180" y="103" class="note">Steel (purchased)</text>
+    <text x="305" y="103" class="note">1</text>
+    <text x="340" y="103" class="note">-</text>
+    <text x="400" y="103" class="note">1.18×1.65×0.28 in</text>
+
+    <line x1="0" y1="132" x2="450" y2="132" class="thin"/>
+    <text x="12" y="125" class="note">5</text>
+    <text x="45" y="125" class="note">Socket Head Cap Screw</text>
+    <text x="180" y="125" class="note">Steel (purchased)</text>
+    <text x="305" y="125" class="note">6</text>
+    <text x="340" y="125" class="note">-</text>
+    <text x="400" y="125" class="note">M4×10</text>
+
+    <text x="12" y="145" class="note">6</text>
+    <text x="45" y="145" class="note">Motor Shaft Key</text>
+    <text x="180" y="145" class="note">Steel (if needed)</text>
+    <text x="305" y="145" class="note">1</text>
+    <text x="340" y="145" class="note">-</text>
+    <text x="400" y="145" class="note">0.16×0.16×0.39 in</text>
+  </g>
+
+  <!-- SPECIFICATIONS BOX -->
+  <rect x="550" y="700" width="220" height="90" class="outline"/>
+  <text x="560" y="720" class="subtitle">SPECIFICATIONS:</text>
+  <line x1="550" y1="728" x2="770" y2="728" class="thin"/>
+  <text x="560" y="743" class="note">Gear Ratio: 100:1</text>
+  <text x="560" y="758" class="note">Output Torque: 40 Nm (continuous)</text>
+  <text x="560" y="773" class="note">Peak Torque: 55 Nm</text>
+  <text x="560" y="788" class="note">Backlash: 0.0008-0.0016 in</text>
+
+  <!-- ASSEMBLY NOTES -->
+  <rect x="30" y="800" width="500" height="80" class="outline"/>
+  <text x="40" y="818" class="subtitle">ASSEMBLY PROCEDURE:</text>
+  <text x="40" y="835" class="note">1. Press bearing 6806-2RS into wave generator cam (110-340 lbf force)</text>
+  <text x="40" y="850" class="note">2. Insert wave generator assembly into flex spline cup</text>
+  <text x="40" y="865" class="note">3. Align flex spline external teeth with circular spline internal teeth, slide together</text>
+  <text x="40" y="880" class="note">4. Verify smooth rotation through 360° - check backlash at 4 positions (0.0008-0.0016 in)</text>
+</svg>
